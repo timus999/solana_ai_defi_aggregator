@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 use instructions::*;
 
+pub mod error;
 pub mod instructions;
 pub mod state;
 pub mod utils;
@@ -8,7 +9,7 @@ pub mod utils;
 declare_id!("Y66qK5L367WXqaS3vsauu3z7V7ppQuL3Lj6FwuHKBPx");
 
 #[program]
-pub mod aggregator {
+pub mod solana_ai_defi_aggregator {
     use super::*;
 
     pub fn initialize_global_state(
@@ -22,11 +23,29 @@ pub mod aggregator {
         instructions::register_user::handler(ctx)
     }
 
-    // pub fn execute_swap(ctx: Context<ExecuteSwap>, amount: u64) -> Result<()> {
-    //     instructions::execute_swap::handler(ctx, amount)
-    // }
+    pub fn execute_swap(
+        ctx: Context<ExecuteSwap>,
+        amount: u64,
+        min_amount_out: u64,
+        input_mint: Pubkey,
+        output_mint: Pubkey,
+    ) -> Result<()> {
+        instructions::execute_swap::handler(ctx, amount, min_amount_out, input_mint, output_mint)
+    }
 
     // pub fn emit_swap_event(ctx: Context<EmitSwapEvent>, amount: u64) -> Result<()> {
     //     instructions::emit_swap_event::handler(ctx, amount)
     // }
+    /// This handler receives a serialized Jupiter swap instruction (swap_ix) from the client and
+    /// performs 'invoked_signed' to the Jupiter program using the provided remaining_accounts.
+    /// WARNING: the client must provide the exact accounts Jupiter expects; your program will
+    /// forward those accounts in `ctx.remaining_accounts` during `invoke_signed`.
+    pub fn jupiter_swap(
+        ctx: Context<JupiterSwap>,
+        swap_ix: Vec<u8>,
+        accounts_meta: Vec<Pubkey>,
+        amount_in: u64,
+    ) -> Result<()> {
+        instructions::jupiter_swap::handler(ctx, swap_ix, accounts_meta, amount_in)
+    }
 }

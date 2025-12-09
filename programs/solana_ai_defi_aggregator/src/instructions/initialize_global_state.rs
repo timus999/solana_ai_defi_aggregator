@@ -6,7 +6,7 @@ use anchor_lang::prelude::*;
 pub struct InitializeGlobalState<'info> {
     #[account(
         init,
-        seeds = [b"global-state"],
+        seeds = [b"global_state"],
         bump,
         payer = admin,
         space = 8 + GlobalState::LEN,
