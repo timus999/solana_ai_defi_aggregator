@@ -2,15 +2,18 @@ use anchor_lang::prelude::*;
 
 #[error_code]
 pub enum JupiterSwapError {
-    #[msg("Invalid Jupiter Swap Instruction")]
-    InvalidJupiterSwapInstruction,
-
-    #[msg("Insufficient token balance")]
+    #[msg("Insufficient balance for swap")]
     InsufficientBalance,
-
-    #[msg("Invalid swap instruction")]
-    InvalidSwapInstruction,
-
+    #[msg("Invalid Jupiter swap instruction")]
+    InvalidJupiterSwapInstruction,
+    #[msg("Invalid token account owner")]
+    InvalidTokenAccountOwner,
+    #[msg("Mint mismatch")]
+    MintMismatch,
+    #[msg("Invalid accounts meta")]
+    InvalidAccountsMeta,
+    #[msg("Slippage exceeded")]
+    SlippageExceeded,
     #[msg("Jupiter CPI failed")]
     JupiterCPIFailed,
 }

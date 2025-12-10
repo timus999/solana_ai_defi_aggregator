@@ -19,7 +19,10 @@ pub struct InitializeGlobalState<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handler(ctx: Context<InitializeGlobalState>, fee_rate: u16) -> Result<()> {
+pub fn initialize_global_state_handler(
+    ctx: Context<InitializeGlobalState>,
+    fee_rate: u16,
+) -> Result<()> {
     let global_state = &mut ctx.accounts.global_state;
 
     global_state.admin = ctx.accounts.admin.key();

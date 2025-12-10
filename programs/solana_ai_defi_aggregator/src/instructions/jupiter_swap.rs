@@ -25,9 +25,11 @@ pub struct Jupiter;
 impl anchor_lang::Id for Jupiter {
     fn id() -> Pubkey {
         // original jupiter program
-        // "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4"
+        "JUP6LkbZbjS1jKKwapdHNy74zcZ3tLUZoi5QNyVTaV4"
+            .parse()
+            .unwrap()
         // fake keypar
-        "11111111111111111111111111111111".parse().unwrap()
+        // "11111111111111111111111111111111".parse().unwrap()
     }
 }
 
@@ -58,6 +60,15 @@ pub struct JupiterSwap<'info> {
     #[account(mut)]
     pub user_output_ata: Account<'info, TokenAccount>,
 
+    // Fee vault ATA (program-owned)
+    #[account(
+        mut,
+        seeds = [b"vaul", input_mint.key().as_ref()],
+        bump,
+        token::mint = input_mint,
+        token::authority = global_state, // PDA authority for future withdrawals
+    )]
+    pub vault_ata: Account<'info, TokenAccount>,
     // The mint addresses passed into the swap handler
     pub input_mint: Box<Account<'info, Mint>>,
     pub output_mint: Box<Account<'info, Mint>>,
@@ -81,11 +92,12 @@ pub struct JupiterSwap<'info> {
 /// Note: In production you should pass the explicit `amount_in` from the client (and verify
 /// the user's ATA balance and that the swap_ix uses the same amount), and verify `swap_program_id`.
 
-pub fn handler(
+pub fn jupiter_swap_handler(
     ctx: Context<JupiterSwap>,
     swap_ix: Vec<u8>,
     accounts_meta: Vec<Pubkey>,
     amount_in: u64,
+    min_amount_out: u64,
 ) -> Result<()> {
     msg!(" Jupiter Swap Handler!!!");
 
@@ -98,19 +110,49 @@ pub fn handler(
     msg!("User ATA balance = {}", user_balance);
     msg!("Amount_in = {}", amount_in);
 
+    require_keys_eq!(
+        ctx.accounts.user_input_ata.owner,
+        ctx.accounts.user.key(),
+        JupiterSwapError::InvalidTokenAccountOwner
+    );
+
+    require_keys_eq!(
+        ctx.accounts.user_input_ata.mint,
+        ctx.accounts.input_mint.key(),
+        JupiterSwapError::MintMismatch
+    );
+
+    require_keys_eq!(
+        ctx.accounts.user_output_ata.mint,
+        ctx.accounts.output_mint.key(),
+        JupiterSwapError::MintMismatch
+    );
+
     // fee calculation using GlobalState.fee_rate
 
     let fee_rate_bps = ctx.accounts.global_state.fee_rate;
     let fee = calculate_fee(amount_in, fee_rate_bps);
     msg!("Fee =  {}", fee);
 
+    // Transfer fee to vault ( user signs for their ATA)
+    token::transfer(
+        CpiContext::new(
+            ctx.accounts.token_program.to_account_info(),
+            token::Transfer {
+                from: ctx.accounts.user_input_ata.to_account_info(),
+                to: ctx.accounts.vault_ata.to_account_info(),
+                authority: ctx.accounts.user.to_account_info(),
+            },
+        ),
+        fee,
+    )?;
+
+    msg!("Fee transferred successfully: {}", fee);
+
     let accounts = accounts_meta
         .into_iter()
         .map(|pubkey| AccountMeta::new(pubkey, false))
         .collect::<Vec<_>>();
-
-    msg!("Fee transferred successfully");
-
     // Deserialize jupiter instruction
     let ix: SolInstruction = SolInstruction {
         program_id: ctx.accounts.jupiter_program.key(),
@@ -131,6 +173,17 @@ pub fn handler(
 
     invoke(&ix, ctx.remaining_accounts)?;
     msg!("Jupiter CPI invoked successfully");
+
+    // Check slippage (post-swap output balance)
+    ctx.accounts.user_output_ata.reload()?;
+    let output_balance_after = ctx.accounts.user_output_ata.amount;
+    require_gte!(
+        output_balance_after,
+        min_amount_out,
+        JupiterSwapError::SlippageExceeded
+    );
+
+    msg!("Output balance after swap: {}", output_balance_after);
 
     // Update UserState
     let user_state = &mut ctx.accounts.user_state;

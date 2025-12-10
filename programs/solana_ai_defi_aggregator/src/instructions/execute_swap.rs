@@ -31,7 +31,7 @@ pub struct ExecuteSwap<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handler(
+pub fn execute_swap_handler(
     ctx: Context<ExecuteSwap>,
     amount_in: u64,
     min_amount_out: u64,

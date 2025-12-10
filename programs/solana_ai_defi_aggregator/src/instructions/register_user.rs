@@ -18,7 +18,7 @@ pub struct RegisterUser<'info> {
     pub system_program: Program<'info, System>,
 }
 
-pub fn handler(ctx: Context<RegisterUser>) -> Result<()> {
+pub fn register_user_handler(ctx: Context<RegisterUser>) -> Result<()> {
     let state = &mut ctx.accounts.user_state;
 
     state.user = ctx.accounts.user.key();
