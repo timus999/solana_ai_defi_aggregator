@@ -5,7 +5,7 @@ use anchor_lang::prelude::*;
 #[instruction(fee_rate: u16)]
 pub struct InitializeGlobalState<'info> {
     #[account(
-        init,
+        init_if_needed,
         seeds = [b"global_state"],
         bump,
         payer = admin,

@@ -19,6 +19,10 @@ pub mod solana_ai_defi_aggregator {
         instructions::initialize_global_state::initialize_global_state_handler(ctx, fee_rate)
     }
 
+    pub fn initialize_vault(ctx: Context<InitializeVault>) -> Result<()> {
+        instructions::initialize_vault::initialize_vault(ctx)
+    }
+
     pub fn register_user(ctx: Context<RegisterUser>) -> Result<()> {
         instructions::register_user::register_user_handler(ctx)
     }
@@ -49,7 +53,7 @@ pub mod solana_ai_defi_aggregator {
     pub fn jupiter_swap(
         ctx: Context<JupiterSwap>,
         swap_ix: Vec<u8>,
-        accounts_meta: Vec<Pubkey>,
+        accounts_meta: Vec<AccountMetaData>,
         amount_in: u64,
         min_amount_out: u64,
     ) -> Result<()> {
