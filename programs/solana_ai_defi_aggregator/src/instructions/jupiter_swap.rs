@@ -7,14 +7,13 @@
 // In some flows you might instead transfer tokens to a program vault PDA that the program signs for ( requires `invoked_signed`
 //  and PDA signer seeds).
 
-use crate::error::JupiterSwapError;
+use crate::error::jupiter_swap_error::JupiterSwapError;
+use crate::events::swap_events::JupiterSwapEvent;
 use crate::state::GlobalState;
 use crate::state::UserState;
 use crate::utils::calculate_fee;
 use anchor_lang::prelude::*;
-use anchor_lang::solana_program::{
-    instruction::Instruction as SolInstruction, program::invoke, pubkey::Pubkey,
-};
+use anchor_lang::solana_program::{instruction::Instruction as SolInstruction, pubkey::Pubkey};
 use anchor_spl::associated_token::AssociatedToken;
 use anchor_spl::token::{self, Token};
 use anchor_spl::token::{Mint, TokenAccount};
@@ -324,14 +323,4 @@ pub fn jupiter_swap_handler(
     msg!(" Jupiter Swap executed successfully");
 
     Ok(())
-}
-
-#[event]
-pub struct JupiterSwapEvent {
-    user: Pubkey,
-    input_mint: Pubkey,
-    output_mint: Pubkey,
-    amount_in: u64,
-    fee: u64,
-    timestamp: i64,
 }

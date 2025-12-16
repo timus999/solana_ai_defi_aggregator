@@ -4,7 +4,7 @@ use anchor_spl::associated_token::AssociatedToken;
 use anchor_spl::token::{Mint, Token, TokenAccount};
 
 #[derive(Accounts)]
-pub struct InitializeVault<'info> {
+pub struct InitializeFeeVault<'info> {
     #[account(mut)]
     pub authority: Signer<'info>,
 
@@ -33,7 +33,7 @@ pub struct InitializeVault<'info> {
     pub rent: Sysvar<'info, Rent>,
 }
 
-pub fn initialize_vault(_ctx: Context<InitializeVault>) -> Result<()> {
+pub fn initialize_fee_vault(_ctx: Context<InitializeFeeVault>) -> Result<()> {
     msg!("Vault initialized successfully");
     Ok(())
 }

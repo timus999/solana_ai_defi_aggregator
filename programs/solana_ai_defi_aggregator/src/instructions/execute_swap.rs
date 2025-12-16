@@ -1,3 +1,4 @@
+use crate::events::swap_events::SwapEvent;
 use crate::state::SwapContext;
 use crate::state::UserState;
 use anchor_lang::prelude::*;
@@ -65,14 +66,4 @@ pub fn execute_swap_handler(
     });
 
     Ok(())
-}
-
-#[event]
-pub struct SwapEvent {
-    pub user: Pubkey,
-    pub amount_in: u64,
-    pub input_mint: Pubkey,
-    pub output_mint: Pubkey,
-    pub swap_id: u64,
-    pub timestamp: i64,
 }

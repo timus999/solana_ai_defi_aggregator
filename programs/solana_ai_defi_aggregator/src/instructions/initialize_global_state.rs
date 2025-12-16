@@ -1,3 +1,4 @@
+use crate::events::swap_events::GlobalStateInitialized;
 use crate::state::GlobalState;
 use anchor_lang::prelude::*;
 
@@ -35,10 +36,4 @@ pub fn initialize_global_state_handler(
     });
 
     Ok(())
-}
-
-#[event]
-pub struct GlobalStateInitialized {
-    pub admin: Pubkey,
-    pub fee_rate: u16,
 }

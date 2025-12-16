@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 
 pub mod error;
+pub mod events;
 pub mod instructions;
 pub mod state;
 pub mod utils;
@@ -19,8 +20,8 @@ pub mod solana_ai_defi_aggregator {
         instructions::initialize_global_state::initialize_global_state_handler(ctx, fee_rate)
     }
 
-    pub fn initialize_vault(ctx: Context<InitializeVault>) -> Result<()> {
-        instructions::initialize_vault::initialize_vault(ctx)
+    pub fn initialize_fee_vault(ctx: Context<InitializeFeeVault>) -> Result<()> {
+        instructions::initialize_fee_vault::initialize_fee_vault(ctx)
     }
 
     pub fn register_user(ctx: Context<RegisterUser>) -> Result<()> {
@@ -43,6 +44,10 @@ pub mod solana_ai_defi_aggregator {
         )
     }
 
+    // ===========================================
+    // Jupiter Swap Instruction
+    // ===========================================
+
     // pub fn emit_swap_event(ctx: Context<EmitSwapEvent>, amount: u64) -> Result<()> {
     //     instructions::emit_swap_event::handler(ctx, amount)
     // }
@@ -64,5 +69,35 @@ pub mod solana_ai_defi_aggregator {
             amount_in,
             min_amount_out,
         )
+    }
+
+    // ===========================================
+    // Vault Instructions
+    // ===========================================
+    //
+    //
+    pub fn initialize_vault(ctx: Context<InitializeVault>, performance_fee_bps: u16) -> Result<()> {
+        instructions::vault::initialize_vault(ctx, performance_fee_bps)
+    }
+
+    pub fn deposit(ctx: Context<Deposit>, amount: u64) -> Result<()> {
+        instructions::vault::deposit(ctx, amount)
+    }
+
+    pub fn withdraw(ctx: Context<Withdraw>, shares: u64) -> Result<()> {
+        instructions::vault::withdraw(ctx, shares)
+    }
+
+    pub fn execute_strategy(
+        ctx: Context<ExecuteStrategy>,
+        strategy_type: StrategyType,
+        amount: u64,
+        min_output: u64,
+    ) -> Result<()> {
+        instructions::vault::execute_strategy(ctx, strategy_type, amount, min_output)
+    }
+
+    pub fn set_strategy_enabled(ctx: Context<SetStrategyEnabled>, enabled: bool) -> Result<()> {
+        instructions::vault::set_strategy_enabled(ctx, enabled)
     }
 }

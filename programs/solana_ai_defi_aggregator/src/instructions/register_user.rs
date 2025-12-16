@@ -1,3 +1,4 @@
+use crate::events::swap_events::UserRegistered;
 use crate::state::UserState;
 use anchor_lang::prelude::*;
 
@@ -31,9 +32,4 @@ pub fn register_user_handler(ctx: Context<RegisterUser>) -> Result<()> {
     });
 
     Ok(())
-}
-
-#[event]
-pub struct UserRegistered {
-    pub user: Pubkey,
 }
