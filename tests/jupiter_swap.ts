@@ -203,7 +203,7 @@ describe("Jupiter Swap Tests", () => {
   async function initializeVault() {
     try {
       await program.methods
-        .initializeVault()
+        .initializeFeeVault()
         .accounts({
           authority: admin.publicKey,
           globalState: globalState,

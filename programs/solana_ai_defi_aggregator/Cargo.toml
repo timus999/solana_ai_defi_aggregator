@@ -9,7 +9,7 @@ crate-type = ["cdylib", "lib"]
 name = "solana_ai_defi_aggregator"
 
 [features]
-default = []
+default = ["test"]
 cpi = ["no-entrypoint"]
 no-entrypoint = []
 no-idl = []
@@ -19,7 +19,7 @@ anchor-debug = []
 custom-heap = []
 custom-panic = []
 # this feature for testing to skip Jupiter Cpi
-test-mode = []
+test= []
 
 
 [dependencies]

@@ -100,4 +100,9 @@ pub mod solana_ai_defi_aggregator {
     pub fn set_strategy_enabled(ctx: Context<SetStrategyEnabled>, enabled: bool) -> Result<()> {
         instructions::vault::set_strategy_enabled(ctx, enabled)
     }
+
+    #[cfg(feature = "test")]
+    pub fn test_increase_assets(ctx: Context<TestIncreaseAssets>, amount: u64) -> Result<()> {
+        instructions::test_increase_assets(ctx, amount)
+    }
 }

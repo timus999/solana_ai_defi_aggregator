@@ -12,3 +12,9 @@ pub use jupiter_swap::*;
 pub use register_user::*;
 pub use vault::StrategyType;
 pub use vault::*;
+
+#[cfg(feature = "test")]
+pub mod test_helper;
+
+#[cfg(feature = "test")]
+pub use test_helper::*;

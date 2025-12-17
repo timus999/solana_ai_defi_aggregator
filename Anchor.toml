@@ -4,6 +4,7 @@ package_manager = "yarn"
 [features]
 resolution = true
 skip-lint = false
+test = true
 
 [programs.devnet]
 solana_ai_defi_aggregator = "Y66qK5L367WXqaS3vsauu3z7V7ppQuL3Lj6FwuHKBPx"

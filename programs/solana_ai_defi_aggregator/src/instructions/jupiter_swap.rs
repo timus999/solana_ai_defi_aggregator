@@ -252,7 +252,7 @@ pub fn jupiter_swap_handler(
     //     msg!("Jupiter CPI completed successfully");
     // }
 
-    // #[cfg(feature = "test-mode")]
+    #[cfg(feature = "test")]
     {
         msg!("TEST MODE: Skipping actual Jupiter CPI");
         msg!("TEST MODE: Simulating swap by transferring output tokens");
@@ -277,7 +277,7 @@ pub fn jupiter_swap_handler(
         .checked_sub(input_balance_after)
         .ok_or(JupiterSwapError::MathOverflow)?;
 
-    #[cfg(feature = "test-mode")]
+    #[cfg(not(feature = "test"))]
     {
         let actual_output_received = output_balance_after
             .checked_sub(output_balance_before)

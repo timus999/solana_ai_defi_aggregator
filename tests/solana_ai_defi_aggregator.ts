@@ -20,8 +20,8 @@
 //   const program = anchor.workspace
 //     .solanaAiDefiAggregator as Program<SolanaAiDefiAggregator>;
 
-//   let admin = provider.wallet;
-//   let user = anchor.web3.Keypair.generate();
+// let admin = provider.wallet;
+// let user = anchor.web3.Keypair.generate();
 
 //   let globalStatePda;
 //   let userStatePda;
@@ -86,9 +86,9 @@
 //       program.programId
 //     );
 
-//     await provider.connection.confirmTransaction(
-//       await provider.connection.requestAirdrop(user.publicKey, 1e9)
-//     );
+// await provider.connection.confirmTransaction(
+//   await provider.connection.requestAirdrop(user.publicKey, 1e9)
+// );
 //   });
 
 //   it("Initialize Global State", async () => {
