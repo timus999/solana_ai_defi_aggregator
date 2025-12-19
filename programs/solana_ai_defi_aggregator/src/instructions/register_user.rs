@@ -8,14 +8,16 @@ pub struct RegisterUser<'info> {
         init,
         seeds = [b"user", user.key().as_ref()],
         bump,
-        payer = user,
+        payer = authority,
         space = 8 + UserState::LEN,
     )]
     pub user_state: Account<'info, UserState>,
 
     #[account(mut)]
-    pub user: Signer<'info>,
+    pub authority: Signer<'info>,
 
+    /// CHECK: PDA
+    pub user: UncheckedAccount<'info>,
     pub system_program: Program<'info, System>,
 }
 

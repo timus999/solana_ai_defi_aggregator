@@ -25,5 +25,7 @@ pub struct StrategyExecutedEvent {
     pub vault: Pubkey,
     pub strategy_type: StrategyType,
     pub amount: u64,
+    pub input_used: u64,
+    pub output_received: u64,
     pub timestamp: i64,
 }

@@ -24,4 +24,15 @@ pub enum VaultError {
     StrategyDisabled,
     #[msg("Invalid fee (max 50%)")]
     InvalidFee,
+    #[msg("Strategy not implemented")]
+    StrategyNotImplemented,
+    #[msg("Invalid amount")]
+    InvalidAmount,
+    #[msg("Protected account in remaining accounts")]
+    ProtectedAccountInRemainingAccounts,
+
+    #[msg("Slippage exceeded")]
+    SlippageExceeded,
+    #[msg("Invalid fee rate")]
+    InvalidFeeRate,
 }

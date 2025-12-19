@@ -18,7 +18,7 @@ pub struct InitializeFeeVault<'info> {
     #[account(
         init,
         payer = authority,
-        seeds = [b"vault", input_mint.key().as_ref()],
+        seeds = [b"fee_vault", input_mint.key().as_ref()],
         bump,
         token::mint = input_mint,
         token::authority = global_state,

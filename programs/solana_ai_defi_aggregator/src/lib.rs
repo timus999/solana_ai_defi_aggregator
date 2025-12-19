@@ -93,8 +93,17 @@ pub mod solana_ai_defi_aggregator {
         strategy_type: StrategyType,
         amount: u64,
         min_output: u64,
+        swap_ix_data: Vec<u8>,
+        accounts_meta: Vec<Pubkey>,
     ) -> Result<()> {
-        instructions::vault::execute_strategy(ctx, strategy_type, amount, min_output)
+        instructions::vault::execute_strategy(
+            ctx,
+            strategy_type,
+            amount,
+            min_output,
+            swap_ix_data,
+            accounts_meta,
+        )
     }
 
     pub fn set_strategy_enabled(ctx: Context<SetStrategyEnabled>, enabled: bool) -> Result<()> {
