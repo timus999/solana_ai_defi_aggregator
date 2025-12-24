@@ -1,4 +1,4 @@
-use crate::instructions::vault::StrategyType;
+use crate::instructions::vault::JupiterStrategyType;
 use anchor_lang::prelude::*;
 #[event]
 pub struct DepositEvent {
@@ -23,7 +23,7 @@ pub struct WithdrawEvent {
 #[event]
 pub struct StrategyExecutedEvent {
     pub vault: Pubkey,
-    pub strategy_type: StrategyType,
+    pub strategy_type: JupiterStrategyType,
     pub amount: u64,
     pub input_used: u64,
     pub output_received: u64,

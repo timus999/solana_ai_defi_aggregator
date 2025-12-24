@@ -88,15 +88,15 @@ pub mod solana_ai_defi_aggregator {
         instructions::vault::withdraw(ctx, shares)
     }
 
-    pub fn execute_strategy(
-        ctx: Context<ExecuteStrategy>,
-        strategy_type: StrategyType,
+    pub fn execute_jupiter_strategy(
+        ctx: Context<ExecuteJupiterStrategy>,
+        strategy_type: JupiterStrategyType,
         amount: u64,
         min_output: u64,
         swap_ix_data: Vec<u8>,
         accounts_meta: Vec<Pubkey>,
     ) -> Result<()> {
-        instructions::vault::execute_strategy(
+        instructions::vault::execute_jupiter_strategy(
             ctx,
             strategy_type,
             amount,
@@ -104,6 +104,51 @@ pub mod solana_ai_defi_aggregator {
             swap_ix_data,
             accounts_meta,
         )
+    }
+
+    pub fn create_strategy(
+        ctx: Context<CreateStrategy>,
+        strategy_id: u64,
+        name: String,
+        description: String,
+        price: u64,
+        strategy_type: state::StrategyType,
+        parameters: state::StrategyParameters,
+    ) -> Result<()> {
+        instructions::marketplace::create_strategy(
+            ctx,
+            strategy_id,
+            name,
+            description,
+            price,
+            strategy_type,
+            parameters,
+        )
+    }
+
+    pub fn buy_strategy(ctx: Context<BuyStrategy>) -> Result<()> {
+        instructions::marketplace::buy_strategy(ctx)
+    }
+
+    pub fn execute_strategy(ctx: Context<ExecuteStrategy>, input_amount: u64) -> Result<()> {
+        instructions::marketplace::execute_strategy(ctx, input_amount)
+    }
+
+    pub fn update_strategy_status(
+        ctx: Context<UpdateStrategy>,
+        is_active: bool,
+        new_price: Option<u64>,
+    ) -> Result<()> {
+        instructions::marketplace::update_strategy_status(ctx, is_active, new_price)
+    }
+
+    pub fn record_execution_result(
+        ctx: Context<RecordExecutionResult>,
+        output_amount: u64,
+        profit: i64,
+        success: bool,
+    ) -> Result<()> {
+        instructions::marketplace::record_execution_result(ctx, output_amount, profit, success)
     }
 
     pub fn set_strategy_enabled(ctx: Context<SetStrategyEnabled>, enabled: bool) -> Result<()> {

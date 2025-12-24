@@ -1,15 +1,14 @@
 use crate::error::vault_error::VaultError;
 use crate::events::vault_events::StrategyExecutedEvent;
-use crate::instructions::vault::StrategyType;
+use crate::instructions::vault::JupiterStrategyType;
 use crate::state::*;
+use crate::utils::fee::calculate_fee;
 use anchor_lang::prelude::*;
 use anchor_lang::solana_program::instruction::{AccountMeta, Instruction as SolInstruction};
-use anchor_lang::solana_program::program::invoke_signed;
 use anchor_spl::associated_token::AssociatedToken;
 use anchor_spl::token::{self, Mint, Token, TokenAccount};
-
 #[derive(Accounts)]
-pub struct ExecuteStrategy<'info> {
+pub struct ExecuteJupiterStrategy<'info> {
     /// Only authority can execute strategies
     #[account(
         constraint = authority.key() == vault.authority @ VaultError::Unauthorized
@@ -84,9 +83,9 @@ pub struct ExecuteStrategy<'info> {
     pub rent: Sysvar<'info, Rent>,
 }
 
-pub fn execute_strategy(
-    ctx: Context<ExecuteStrategy>,
-    strategy_type: StrategyType,
+pub fn execute_jupiter_strategy(
+    ctx: Context<ExecuteJupiterStrategy>,
+    strategy_type: JupiterStrategyType,
     amount: u64,
     min_output: u64,
     swap_ix_data: Vec<u8>,
@@ -109,14 +108,14 @@ pub fn execute_strategy(
     msg!("Vault output balance before: {}", output_balance_before);
 
     match strategy_type {
-        StrategyType::JupiterSwap => {
+        JupiterStrategyType::JupiterSwap => {
             execute_jupiter_swap_inline(ctx, amount, min_output, swap_ix_data, accounts_meta)
         }
-        StrategyType::Rebalance => {
+        JupiterStrategyType::Rebalance => {
             msg!("Rebalance strategy - Coming soon");
             Ok(())
         }
-        StrategyType::Yield => {
+        JupiterStrategyType::Yield => {
             msg!("Yield strategy - Coming soon");
             Ok(())
         }
@@ -126,7 +125,7 @@ pub fn execute_strategy(
 /// Execute Jupiter swap inline (no CPI to own program)
 /// This inlines the logic from jupiter_swap_handler
 pub fn execute_jupiter_swap_inline(
-    ctx: Context<ExecuteStrategy>,
+    ctx: Context<ExecuteJupiterStrategy>,
     amount: u64,
     min_output: u64,
     swap_ix_data: Vec<u8>,
@@ -372,7 +371,7 @@ pub fn execute_jupiter_swap_inline(
 
     emit!(StrategyExecutedEvent {
         vault: vault.key(),
-        strategy_type: StrategyType::JupiterSwap,
+        strategy_type: JupiterStrategyType::JupiterSwap,
         amount,
         input_used: actual_input_used,
         output_received: actual_output_received,
@@ -382,37 +381,6 @@ pub fn execute_jupiter_swap_inline(
     msg!("=== Jupiter Swap Executed Successfully ===");
 
     Ok(())
-}
-
-// ============================================
-// HELPER FUNCTIONS
-// ============================================
-
-/// Calculate fee with overflow protection and proper rounding
-/// Fee is rounded UP to ensure we never lose fees due to rounding
-fn calculate_fee(amount: u64, fee_rate_bps: u16) -> Result<u64> {
-    require!(fee_rate_bps <= 10000, VaultError::InvalidFeeRate);
-
-    if fee_rate_bps == 0 || amount == 0 {
-        return Ok(0);
-    }
-
-    // Calculate fee: (amount * fee_rate_bps) / 10000
-    // Add 9999 before division to round up
-    let numerator = (amount as u128)
-        .checked_mul(fee_rate_bps as u128)
-        .ok_or(VaultError::MathOverflow)?;
-
-    let fee = numerator
-        .checked_add(9999)
-        .ok_or(VaultError::MathOverflow)?
-        .checked_div(10000)
-        .ok_or(VaultError::MathOverflow)?;
-
-    // Ensure fee fits in u64
-    require!(fee <= u64::MAX as u128, VaultError::MathOverflow);
-
-    Ok(fee as u64)
 }
 
 /// Updates vault's total_assets after a swap

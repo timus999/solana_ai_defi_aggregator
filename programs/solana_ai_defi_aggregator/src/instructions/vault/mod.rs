@@ -14,7 +14,7 @@ pub use withdraw::*;
 // Re-export strategy type
 
 #[derive(AnchorSerialize, AnchorDeserialize, Clone, Debug)]
-pub enum StrategyType {
+pub enum JupiterStrategyType {
     JupiterSwap,
     Rebalance,
     Yield,
