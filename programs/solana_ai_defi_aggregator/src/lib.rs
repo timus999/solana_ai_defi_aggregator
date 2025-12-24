@@ -7,7 +7,7 @@ pub mod state;
 pub mod utils;
 
 use instructions::*;
-declare_id!("Y66qK5L367WXqaS3vsauu3z7V7ppQuL3Lj6FwuHKBPx");
+declare_id!("6VM1KADvmpRuRzr2rHbMudFgFTbR9AbCN76QN8ksoH26");
 
 #[program]
 pub mod solana_ai_defi_aggregator {
