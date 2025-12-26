@@ -8,6 +8,172 @@
   },
   "instructions": [
     {
+      "name": "buy_strategy",
+      "discriminator": [
+        165,
+        254,
+        239,
+        132,
+        159,
+        143,
+        230,
+        223
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "user_strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              },
+              {
+                "kind": "account",
+                "path": "strategy"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "creator",
+          "writable": true
+        },
+        {
+          "name": "buyer_token_account",
+          "writable": true
+        },
+        {
+          "name": "creator_token_account",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_strategy",
+      "discriminator": [
+        152,
+        160,
+        107,
+        148,
+        245,
+        190,
+        127,
+        224
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "arg",
+                "path": "strategy_id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "strategy_id",
+          "type": "u64"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "u64"
+        },
+        {
+          "name": "strategy_type",
+          "type": {
+            "defined": {
+              "name": "StrategyType"
+            }
+          }
+        },
+        {
+          "name": "parameters",
+          "type": {
+            "defined": {
+              "name": "StrategyParameters"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "deposit",
       "discriminator": [
         242,
@@ -203,16 +369,16 @@
       ]
     },
     {
-      "name": "execute_strategy",
+      "name": "execute_jupiter_strategy",
       "discriminator": [
-        164,
-        197,
-        251,
-        183,
-        219,
-        177,
-        85,
-        161
+        84,
+        166,
+        11,
+        194,
+        12,
+        59,
+        208,
+        92
       ],
       "accounts": [
         {
@@ -405,7 +571,7 @@
           "name": "strategy_type",
           "type": {
             "defined": {
-              "name": "StrategyType"
+              "name": "JupiterStrategyType"
             }
           }
         },
@@ -426,6 +592,117 @@
           "type": {
             "vec": "pubkey"
           }
+        }
+      ]
+    },
+    {
+      "name": "execute_strategy",
+      "discriminator": [
+        164,
+        197,
+        251,
+        183,
+        219,
+        177,
+        85,
+        161
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "user_strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "executor"
+              },
+              {
+                "kind": "account",
+                "path": "strategy"
+              }
+            ]
+          }
+        },
+        {
+          "name": "executor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "execution",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  120,
+                  101,
+                  99,
+                  117,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "strategy"
+              },
+              {
+                "kind": "account",
+                "path": "strategy.total_executions",
+                "account": "Strategy"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "input_amount",
+          "type": "u64"
         }
       ]
     },
@@ -952,6 +1229,51 @@
       ]
     },
     {
+      "name": "record_execution_result",
+      "discriminator": [
+        97,
+        195,
+        221,
+        111,
+        23,
+        219,
+        215,
+        158
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "user_strategy",
+          "writable": true
+        },
+        {
+          "name": "execution",
+          "writable": true
+        },
+        {
+          "name": "executor",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "output_amount",
+          "type": "u64"
+        },
+        {
+          "name": "profit",
+          "type": "i64"
+        },
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ]
+    },
+    {
       "name": "register_user",
       "discriminator": [
         2,
@@ -1097,6 +1419,41 @@
       ]
     },
     {
+      "name": "update_strategy_status",
+      "discriminator": [
+        75,
+        150,
+        40,
+        235,
+        0,
+        137,
+        169,
+        59
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "creator",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "is_active",
+          "type": "bool"
+        },
+        {
+          "name": "new_price",
+          "type": {
+            "option": "u64"
+          }
+        }
+      ]
+    },
+    {
       "name": "withdraw",
       "discriminator": [
         183,
@@ -1222,6 +1579,32 @@
       ]
     },
     {
+      "name": "Strategy",
+      "discriminator": [
+        174,
+        110,
+        39,
+        119,
+        82,
+        106,
+        169,
+        102
+      ]
+    },
+    {
+      "name": "StrategyExecution",
+      "discriminator": [
+        86,
+        165,
+        62,
+        110,
+        21,
+        162,
+        193,
+        165
+      ]
+    },
+    {
       "name": "SwapContext",
       "discriminator": [
         42,
@@ -1245,6 +1628,19 @@
         167,
         186,
         126
+      ]
+    },
+    {
+      "name": "UserStrategy",
+      "discriminator": [
+        54,
+        168,
+        136,
+        194,
+        111,
+        137,
+        122,
+        100
       ]
     },
     {
@@ -1357,53 +1753,83 @@
   "errors": [
     {
       "code": 6000,
-      "name": "InsufficientBalance",
-      "msg": "Insufficient balance in user's token account"
-    },
-    {
-      "code": 6001,
-      "name": "InvalidTokenAccountOwner",
-      "msg": "Invalid token account owner"
-    },
-    {
-      "code": 6002,
-      "name": "MintMismatch",
-      "msg": "Mint mismatch between accounts"
-    },
-    {
-      "code": 6003,
-      "name": "InvalidJupiterProgram",
-      "msg": "Invalid Jupiter program ID"
-    },
-    {
-      "code": 6004,
-      "name": "SlippageExceeded",
-      "msg": "Slippage tolerance exceeded"
-    },
-    {
-      "code": 6005,
       "name": "MathOverflow",
       "msg": "Math overflow occurred"
     },
     {
+      "code": 6001,
+      "name": "ZeroAmount",
+      "msg": "Cannot deposit/withdraw zero amount"
+    },
+    {
+      "code": 6002,
+      "name": "ZeroShares",
+      "msg": "Cannot mint/burn zero shares"
+    },
+    {
+      "code": 6003,
+      "name": "ZeroAssets",
+      "msg": "Calculated zero assets"
+    },
+    {
+      "code": 6004,
+      "name": "NoShares",
+      "msg": "No shares exist in vault"
+    },
+    {
+      "code": 6005,
+      "name": "MintMismatch",
+      "msg": "Mint mismatch"
+    },
+    {
       "code": 6006,
-      "name": "InvalidAmount",
-      "msg": "Invalid amount (must be > 0)"
+      "name": "InvalidOwner",
+      "msg": "Invalid account owner"
     },
     {
       "code": 6007,
-      "name": "InvalidFeeRate",
-      "msg": "Invalid fee rate (must be <= 10000 bps)"
+      "name": "InsufficientAssets",
+      "msg": "Insufficient assets in vault"
     },
     {
       "code": 6008,
-      "name": "ProtectedAccountInRemainingAccounts",
-      "msg": "Protected account found in remaining accounts"
+      "name": "Unauthorized",
+      "msg": "Unauthorized"
     },
     {
       "code": 6009,
-      "name": "UnexpectedInputAmount",
-      "msg": "Unexpected input amount used in swap"
+      "name": "StrategyDisabled",
+      "msg": "Strategy not enabled"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidFee",
+      "msg": "Invalid fee (max 50%)"
+    },
+    {
+      "code": 6011,
+      "name": "StrategyNotImplemented",
+      "msg": "Strategy not implemented"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidAmount",
+      "msg": "Invalid amount"
+    },
+    {
+      "code": 6013,
+      "name": "ProtectedAccountInRemainingAccounts",
+      "msg": "Protected account in remaining accounts"
+    },
+    {
+      "code": 6014,
+      "name": "SlippageExceeded",
+      "msg": "Slippage exceeded"
+    },
+    {
+      "code": 6015,
+      "name": "InvalidFeeRate",
+      "msg": "Invalid fee rate"
     }
   ],
   "types": [
@@ -1496,6 +1922,23 @@
       }
     },
     {
+      "name": "JupiterStrategyType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "JupiterSwap"
+          },
+          {
+            "name": "Rebalance"
+          },
+          {
+            "name": "Yield"
+          }
+        ]
+      }
+    },
+    {
       "name": "JupiterSwapEvent",
       "type": {
         "kind": "struct",
@@ -1528,6 +1971,78 @@
       }
     },
     {
+      "name": "Strategy",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "strategy_id",
+            "type": "u64"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "is_active",
+            "type": "bool"
+          },
+          {
+            "name": "total_purchases",
+            "type": "u64"
+          },
+          {
+            "name": "total_executions",
+            "type": "u64"
+          },
+          {
+            "name": "total_profit",
+            "type": "i64"
+          },
+          {
+            "name": "success_rate",
+            "type": "u16"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "strategy_type",
+            "type": {
+              "defined": {
+                "name": "StrategyType"
+              }
+            }
+          },
+          {
+            "name": "parameters",
+            "type": {
+              "defined": {
+                "name": "StrategyParameters"
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
       "name": "StrategyExecutedEvent",
       "type": {
         "kind": "struct",
@@ -1540,7 +2055,7 @@
             "name": "strategy_type",
             "type": {
               "defined": {
-                "name": "StrategyType"
+                "name": "JupiterStrategyType"
               }
             }
           },
@@ -1564,18 +2079,89 @@
       }
     },
     {
+      "name": "StrategyExecution",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "strategy",
+            "type": "pubkey"
+          },
+          {
+            "name": "executor",
+            "type": "pubkey"
+          },
+          {
+            "name": "executed_at",
+            "type": "i64"
+          },
+          {
+            "name": "input_amount",
+            "type": "u64"
+          },
+          {
+            "name": "output_amount",
+            "type": "u64"
+          },
+          {
+            "name": "profit",
+            "type": "i64"
+          },
+          {
+            "name": "success",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StrategyParameters",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "input_token",
+            "type": "pubkey"
+          },
+          {
+            "name": "output_token",
+            "type": "pubkey"
+          },
+          {
+            "name": "min_profit_bps",
+            "type": "u16"
+          },
+          {
+            "name": "max_slippage_bps",
+            "type": "u16"
+          },
+          {
+            "name": "execution_interval",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
       "name": "StrategyType",
       "type": {
         "kind": "enum",
         "variants": [
           {
-            "name": "JupiterSwap"
+            "name": "Arbitrage"
           },
           {
-            "name": "Rebalance"
+            "name": "YieldFarming"
           },
           {
-            "name": "Yield"
+            "name": "Rebalancing"
+          },
+          {
+            "name": "Custom"
           }
         ]
       }
@@ -1680,6 +2266,38 @@
           {
             "name": "swaps",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "UserStrategy",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "strategy",
+            "type": "pubkey"
+          },
+          {
+            "name": "purchased_at",
+            "type": "i64"
+          },
+          {
+            "name": "times_executed",
+            "type": "u64"
+          },
+          {
+            "name": "total_profit",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }

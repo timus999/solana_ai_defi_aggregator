@@ -34,3 +34,36 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+## File Structure
+
+frontend/
+├── app/
+│   ├── page.tsx                          ← Dashboard
+│   ├── deposit/page.tsx                  ← Deposit
+│   ├── withdraw/page.tsx                 ← Withdraw
+│   ├── swap/page.tsx                     ← Jupiter Swap
+│   └── strategies/
+│       ├── page.tsx                      ← Marketplace
+│       ├── create/page.tsx               ← Create strategy
+│       ├── [id]/page.tsx                 ← Strategy detail
+│       └── my-strategies/page.tsx        ← My Strategies
+├── components/
+│   ├── VaultDashboard.tsx                ← Vault stats
+│   ├── DepositForm.tsx                   ← Deposit UI
+│   ├── WithdrawForm.tsx                  ← Withdraw UI
+│   ├── Portfolio.tsx                     ← Portfolio view
+│   ├── TransactionHistory.tsx            ← Transaction list
+│   ├── StrategyMarketplace.tsx           ← Browse strategies
+│   ├── CreateStrategy.tsx                ← Create form
+│   ├── StrategyDetail.tsx                ← Detail & buy
+│   ├── JupiterSwap.tsx                   ← Swap interface
+│   └── MyStrategies.tsx                  ← Manage strategies
+├── hooks/
+│   ├── useProgram.ts                     ← Anchor program
+│   ├── useVault.ts                       ← Vault data
+│   └── useJupiter.ts                     ← Jupiter hook
+└── utils/
+    ├── constants.ts                      ← Program IDs, etc.
+    └── jupiter.ts                        ← Jupiter helpers

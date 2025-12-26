@@ -1,0 +1,25 @@
+{
+  "agents": [
+    {
+      "id": "arbitrage-agent-1",
+      "name": "Arbitrage Agent Alpha",
+      "strategies": ["STRATEGY_PUBKEY_1", "STRATEGY_PUBKEY_2"],
+      "config": {
+        "checkInterval": 30000,
+        "maxConcurrentExecutions": 3,
+        "enableRiskManagement": true,
+        "enableMarketAnalysis": true
+      }
+    },
+    {
+      "id": "yield-agent-1",
+      "name": "Yield Farmer Beta",
+      "strategies": ["YIELD_STRATEGY_1"],
+      "config": {
+        "checkInterval": 60000,
+        "maxConcurrentExecutions": 1,
+        "enableRiskManagement": true
+      }
+    }
+  ]
+}

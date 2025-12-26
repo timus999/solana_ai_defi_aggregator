@@ -14,6 +14,172 @@ export type SolanaAiDefiAggregator = {
   },
   "instructions": [
     {
+      "name": "buyStrategy",
+      "discriminator": [
+        165,
+        254,
+        239,
+        132,
+        159,
+        143,
+        230,
+        223
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "userStrategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              },
+              {
+                "kind": "account",
+                "path": "strategy"
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "creator",
+          "writable": true
+        },
+        {
+          "name": "buyerTokenAccount",
+          "writable": true
+        },
+        {
+          "name": "creatorTokenAccount",
+          "writable": true
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "createStrategy",
+      "discriminator": [
+        152,
+        160,
+        107,
+        148,
+        245,
+        190,
+        127,
+        224
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "creator"
+              },
+              {
+                "kind": "arg",
+                "path": "strategyId"
+              }
+            ]
+          }
+        },
+        {
+          "name": "creator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "strategyId",
+          "type": "u64"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "name": "price",
+          "type": "u64"
+        },
+        {
+          "name": "strategyType",
+          "type": {
+            "defined": {
+              "name": "strategyType"
+            }
+          }
+        },
+        {
+          "name": "parameters",
+          "type": {
+            "defined": {
+              "name": "strategyParameters"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "deposit",
       "discriminator": [
         242,
@@ -209,16 +375,16 @@ export type SolanaAiDefiAggregator = {
       ]
     },
     {
-      "name": "executeStrategy",
+      "name": "executeJupiterStrategy",
       "discriminator": [
-        164,
-        197,
-        251,
-        183,
-        219,
-        177,
-        85,
-        161
+        84,
+        166,
+        11,
+        194,
+        12,
+        59,
+        208,
+        92
       ],
       "accounts": [
         {
@@ -411,7 +577,7 @@ export type SolanaAiDefiAggregator = {
           "name": "strategyType",
           "type": {
             "defined": {
-              "name": "strategyType"
+              "name": "jupiterStrategyType"
             }
           }
         },
@@ -432,6 +598,117 @@ export type SolanaAiDefiAggregator = {
           "type": {
             "vec": "pubkey"
           }
+        }
+      ]
+    },
+    {
+      "name": "executeStrategy",
+      "discriminator": [
+        164,
+        197,
+        251,
+        183,
+        219,
+        177,
+        85,
+        161
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "userStrategy",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  117,
+                  115,
+                  101,
+                  114,
+                  95,
+                  115,
+                  116,
+                  114,
+                  97,
+                  116,
+                  101,
+                  103,
+                  121
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "executor"
+              },
+              {
+                "kind": "account",
+                "path": "strategy"
+              }
+            ]
+          }
+        },
+        {
+          "name": "executor",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "execution",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  120,
+                  101,
+                  99,
+                  117,
+                  116,
+                  105,
+                  111,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "strategy"
+              },
+              {
+                "kind": "account",
+                "path": "strategy.total_executions",
+                "account": "strategy"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true
+        },
+        {
+          "name": "vaultTokenAccount",
+          "writable": true
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "tokenProgram",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "inputAmount",
+          "type": "u64"
         }
       ]
     },
@@ -958,6 +1235,51 @@ export type SolanaAiDefiAggregator = {
       ]
     },
     {
+      "name": "recordExecutionResult",
+      "discriminator": [
+        97,
+        195,
+        221,
+        111,
+        23,
+        219,
+        215,
+        158
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "userStrategy",
+          "writable": true
+        },
+        {
+          "name": "execution",
+          "writable": true
+        },
+        {
+          "name": "executor",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "outputAmount",
+          "type": "u64"
+        },
+        {
+          "name": "profit",
+          "type": "i64"
+        },
+        {
+          "name": "success",
+          "type": "bool"
+        }
+      ]
+    },
+    {
       "name": "registerUser",
       "discriminator": [
         2,
@@ -1103,6 +1425,41 @@ export type SolanaAiDefiAggregator = {
       ]
     },
     {
+      "name": "updateStrategyStatus",
+      "discriminator": [
+        75,
+        150,
+        40,
+        235,
+        0,
+        137,
+        169,
+        59
+      ],
+      "accounts": [
+        {
+          "name": "strategy",
+          "writable": true
+        },
+        {
+          "name": "creator",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "isActive",
+          "type": "bool"
+        },
+        {
+          "name": "newPrice",
+          "type": {
+            "option": "u64"
+          }
+        }
+      ]
+    },
+    {
       "name": "withdraw",
       "discriminator": [
         183,
@@ -1228,6 +1585,32 @@ export type SolanaAiDefiAggregator = {
       ]
     },
     {
+      "name": "strategy",
+      "discriminator": [
+        174,
+        110,
+        39,
+        119,
+        82,
+        106,
+        169,
+        102
+      ]
+    },
+    {
+      "name": "strategyExecution",
+      "discriminator": [
+        86,
+        165,
+        62,
+        110,
+        21,
+        162,
+        193,
+        165
+      ]
+    },
+    {
       "name": "swapContext",
       "discriminator": [
         42,
@@ -1251,6 +1634,19 @@ export type SolanaAiDefiAggregator = {
         167,
         186,
         126
+      ]
+    },
+    {
+      "name": "userStrategy",
+      "discriminator": [
+        54,
+        168,
+        136,
+        194,
+        111,
+        137,
+        122,
+        100
       ]
     },
     {
@@ -1363,53 +1759,83 @@ export type SolanaAiDefiAggregator = {
   "errors": [
     {
       "code": 6000,
-      "name": "insufficientBalance",
-      "msg": "Insufficient balance in user's token account"
-    },
-    {
-      "code": 6001,
-      "name": "invalidTokenAccountOwner",
-      "msg": "Invalid token account owner"
-    },
-    {
-      "code": 6002,
-      "name": "mintMismatch",
-      "msg": "Mint mismatch between accounts"
-    },
-    {
-      "code": 6003,
-      "name": "invalidJupiterProgram",
-      "msg": "Invalid Jupiter program ID"
-    },
-    {
-      "code": 6004,
-      "name": "slippageExceeded",
-      "msg": "Slippage tolerance exceeded"
-    },
-    {
-      "code": 6005,
       "name": "mathOverflow",
       "msg": "Math overflow occurred"
     },
     {
+      "code": 6001,
+      "name": "zeroAmount",
+      "msg": "Cannot deposit/withdraw zero amount"
+    },
+    {
+      "code": 6002,
+      "name": "zeroShares",
+      "msg": "Cannot mint/burn zero shares"
+    },
+    {
+      "code": 6003,
+      "name": "zeroAssets",
+      "msg": "Calculated zero assets"
+    },
+    {
+      "code": 6004,
+      "name": "noShares",
+      "msg": "No shares exist in vault"
+    },
+    {
+      "code": 6005,
+      "name": "mintMismatch",
+      "msg": "Mint mismatch"
+    },
+    {
       "code": 6006,
-      "name": "invalidAmount",
-      "msg": "Invalid amount (must be > 0)"
+      "name": "invalidOwner",
+      "msg": "Invalid account owner"
     },
     {
       "code": 6007,
-      "name": "invalidFeeRate",
-      "msg": "Invalid fee rate (must be <= 10000 bps)"
+      "name": "insufficientAssets",
+      "msg": "Insufficient assets in vault"
     },
     {
       "code": 6008,
-      "name": "protectedAccountInRemainingAccounts",
-      "msg": "Protected account found in remaining accounts"
+      "name": "unauthorized",
+      "msg": "unauthorized"
     },
     {
       "code": 6009,
-      "name": "unexpectedInputAmount",
-      "msg": "Unexpected input amount used in swap"
+      "name": "strategyDisabled",
+      "msg": "Strategy not enabled"
+    },
+    {
+      "code": 6010,
+      "name": "invalidFee",
+      "msg": "Invalid fee (max 50%)"
+    },
+    {
+      "code": 6011,
+      "name": "strategyNotImplemented",
+      "msg": "Strategy not implemented"
+    },
+    {
+      "code": 6012,
+      "name": "invalidAmount",
+      "msg": "Invalid amount"
+    },
+    {
+      "code": 6013,
+      "name": "protectedAccountInRemainingAccounts",
+      "msg": "Protected account in remaining accounts"
+    },
+    {
+      "code": 6014,
+      "name": "slippageExceeded",
+      "msg": "Slippage exceeded"
+    },
+    {
+      "code": 6015,
+      "name": "invalidFeeRate",
+      "msg": "Invalid fee rate"
     }
   ],
   "types": [
@@ -1502,6 +1928,23 @@ export type SolanaAiDefiAggregator = {
       }
     },
     {
+      "name": "jupiterStrategyType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "jupiterSwap"
+          },
+          {
+            "name": "rebalance"
+          },
+          {
+            "name": "yield"
+          }
+        ]
+      }
+    },
+    {
       "name": "jupiterSwapEvent",
       "type": {
         "kind": "struct",
@@ -1534,6 +1977,78 @@ export type SolanaAiDefiAggregator = {
       }
     },
     {
+      "name": "strategy",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "strategyId",
+            "type": "u64"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "isActive",
+            "type": "bool"
+          },
+          {
+            "name": "totalPurchases",
+            "type": "u64"
+          },
+          {
+            "name": "totalExecutions",
+            "type": "u64"
+          },
+          {
+            "name": "totalProfit",
+            "type": "i64"
+          },
+          {
+            "name": "successRate",
+            "type": "u16"
+          },
+          {
+            "name": "createdAt",
+            "type": "i64"
+          },
+          {
+            "name": "strategyType",
+            "type": {
+              "defined": {
+                "name": "strategyType"
+              }
+            }
+          },
+          {
+            "name": "parameters",
+            "type": {
+              "defined": {
+                "name": "strategyParameters"
+              }
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
       "name": "strategyExecutedEvent",
       "type": {
         "kind": "struct",
@@ -1546,7 +2061,7 @@ export type SolanaAiDefiAggregator = {
             "name": "strategyType",
             "type": {
               "defined": {
-                "name": "strategyType"
+                "name": "jupiterStrategyType"
               }
             }
           },
@@ -1570,18 +2085,89 @@ export type SolanaAiDefiAggregator = {
       }
     },
     {
+      "name": "strategyExecution",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "strategy",
+            "type": "pubkey"
+          },
+          {
+            "name": "executor",
+            "type": "pubkey"
+          },
+          {
+            "name": "executedAt",
+            "type": "i64"
+          },
+          {
+            "name": "inputAmount",
+            "type": "u64"
+          },
+          {
+            "name": "outputAmount",
+            "type": "u64"
+          },
+          {
+            "name": "profit",
+            "type": "i64"
+          },
+          {
+            "name": "success",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "strategyParameters",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "inputToken",
+            "type": "pubkey"
+          },
+          {
+            "name": "outputToken",
+            "type": "pubkey"
+          },
+          {
+            "name": "minProfitBps",
+            "type": "u16"
+          },
+          {
+            "name": "maxSlippageBps",
+            "type": "u16"
+          },
+          {
+            "name": "executionInterval",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
       "name": "strategyType",
       "type": {
         "kind": "enum",
         "variants": [
           {
-            "name": "jupiterSwap"
+            "name": "arbitrage"
           },
           {
-            "name": "rebalance"
+            "name": "yieldFarming"
           },
           {
-            "name": "yield"
+            "name": "rebalancing"
+          },
+          {
+            "name": "custom"
           }
         ]
       }
@@ -1686,6 +2272,38 @@ export type SolanaAiDefiAggregator = {
           {
             "name": "swaps",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "userStrategy",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "strategy",
+            "type": "pubkey"
+          },
+          {
+            "name": "purchasedAt",
+            "type": "i64"
+          },
+          {
+            "name": "timesExecuted",
+            "type": "u64"
+          },
+          {
+            "name": "totalProfit",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }

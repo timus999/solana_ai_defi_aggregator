@@ -80,10 +80,10 @@ export default function RootLayout({
                           Dashboard
                         </Link>
                         <Link
-                          href="/deposit"
+                          href="/swap"
                           className="text-gray-300 hover:text-white transition"
                         >
-                          Deposit
+                          Swap
                         </Link>
                         <Link
                           href="/withdraw"

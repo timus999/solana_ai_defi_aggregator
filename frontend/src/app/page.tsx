@@ -1,4 +1,3 @@
-// app/page.tsx - Updated Dashboard
 "use client";
 import { useWallet } from "@solana/wallet-adapter-react";
 import VaultDashboard from "@/components/VaultDashboard";
