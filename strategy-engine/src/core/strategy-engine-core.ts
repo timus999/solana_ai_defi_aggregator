@@ -72,17 +72,26 @@ export abstract class BaseStrategy {
 
   // Initialize strategy by loading from chain
   async initialize(): Promise<void> {
-    const strategyAccount = await this.program.account.strategy.fetch(
-      this.strategyPubkey
-    );
-
+    // fetch strategy account from chain
+    // const strategyAccount = await this.program.account.strategy.fetch(
+    //   this.strategyPubkey
+    // );
+    // For testing we will put mock data value
+    // output token is changed
     this.parameters = {
-      inputToken: strategyAccount.parameters.inputToken,
-      outputToken: strategyAccount.parameters.outputToken,
-      minProfitBps: strategyAccount.parameters.minProfitBps,
-      maxSlippageBps: strategyAccount.parameters.maxSlippageBps,
-      executionInterval: strategyAccount.parameters.executionInterval,
-      maxPositionSize: strategyAccount.parameters.maxPositionSize,
+      // inputToken: strategyAccount.parameters.inputToken,
+      // outputToken: strategyAccount.parameters.outputToken,
+      // minProfitBps: strategyAccount.parameters.minProfitBps,
+      // maxSlippageBps: strategyAccount.parameters.maxSlippageBps,
+      // executionInterval: strategyAccount.parameters.executionInterval,
+      // maxPositionSize: strategyAccount.parameters.maxPositionSize,
+      // for testing
+      inputToken: this.parameters.inputToken,
+      outputToken: this.parameters.outputToken,
+      minProfitBps: 50,
+      maxSlippageBps: 100,
+      executionInterval: 60,
+      maxPositionSize: 1000000,
     };
 
     console.log(` Strategy initialized: ${this.strategyPubkey.toString()}`);
@@ -130,6 +139,7 @@ export abstract class BaseStrategy {
 }
 export type StrategyCtor = new (
   strategyPubkey: PublicKey,
+  parameters: StrategyParameters,
   program: Program,
   connection: Connection,
   wallet: Wallet
@@ -156,6 +166,7 @@ export class StrategyRegistry {
   createInstance(
     name: string,
     strategyPubkey: PublicKey,
+    parameters: StrategyParameters,
     program: Program,
     connection: Connection,
     wallet: Wallet
@@ -165,7 +176,13 @@ export class StrategyRegistry {
       console.error(`Strategy not found: ${name}`);
       return null;
     }
-    return new StrategyClass(strategyPubkey, program, connection, wallet);
+    return new StrategyClass(
+      strategyPubkey,
+      parameters,
+      program,
+      connection,
+      wallet
+    );
   }
 }
 
@@ -184,24 +201,43 @@ export class StrategyFactory {
     wallet: Wallet
   ): Promise<BaseStrategy | null> {
     try {
-      // Fetch strategy from chain
-      const strategyAccount = await program.account.strategy.fetch(
-        strategyPubkey
-      );
+      // // Fetch strategy from chain
+      // const strategyAccount = await program.account.strategy.fetch(
+      //   strategyPubkey
+      // );
 
-      // Get strategy type
-      const strategyType = Object.keys(strategyAccount.strategyType)[0];
-      console.log(`🏭 Creating strategy of type: ${strategyType}`);
+      // // Get strategy type
+      // const strategyType = Object.keys(strategyAccount.strategyType)[0];
+      // console.log(`🏭 Creating strategy of type: ${strategyType}`);
 
-      // Create instance from registry
+      // // Create instance from registry
+      // const strategy = strategyRegistry.createInstance(
+      //   strategyType!,
+      //   strategyPubkey,
+      //   strategyAccount.parameters,
+      //   program,
+      //   connection,
+      //   wallet
+      // );
+      //
+
+      // test
+      const parameters = {
+        inputToken: new PublicKey(process.env.SOL_MINT!),
+        outputToken: new PublicKey(process.env.USDC_MINT!),
+        minProfitBps: 10, // Minimum profit in basis points ( 50 = 0.5%)
+        maxSlippageBps: 20, // Maximum slippage tolerance
+        executionInterval: 60, // Seconds between checks
+        maxPositionSize: 5000, // Maximum trade size in USDC
+      };
       const strategy = strategyRegistry.createInstance(
-        strategyType!,
+        "arbitrage",
         strategyPubkey,
+        parameters,
         program,
         connection,
         wallet
       );
-
       if (strategy) {
         await strategy.initialize();
       }

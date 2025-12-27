@@ -4,7 +4,7 @@
 //
 
 import { Connection, PublicKey } from "@solana/web3.js";
-import { MarketData } from "../core/strategy-engine-core";
+import type { MarketData } from "../core/strategy-engine-core.ts";
 import fetch from "node-fetch";
 
 // Jupiter Price Monitors
@@ -31,21 +31,27 @@ export class JupiterPriceMonitor {
     try {
       // Fetch quote from Jupiter
       const response = await fetch(
-        `https://quote-api.jup.ag/v6/quote?` +
+        `https://api.jup.ag/swap/v1/quote?cluster=devnet&slippageBps=50` +
+          `&swapMode=ExactIn&restrictIntermediateTokens=true&maxAccounts=64&instructionVersion=V1&` +
           `inputMint=${inputMint.toString()}&` +
           `outputMint=${outputMint.toString()}&` +
-          `amount=${amount}&` +
-          `slippageBps=50`
+          `amount=${amount}`,
+        {
+          method: "GET",
+          headers: {
+            "x-api-key": process.env.JUPITER_API_KEY!,
+          },
+        }
       );
 
       if (!response.ok) {
-        throw new Error(`Jupiter API error: ${response.statusText}`);
+        const text = await response.text();
+        throw new Error(`Jupiter API error ${response.status}: ${text}`);
       }
-
-      const quote = await response.json();
+      const quote: any = await response.json();
 
       // calcuolate price
-      const outputAmount = parseInt(quote.outputAmount);
+      const outputAmount = parseInt(quote.outAmount);
       const price = outputAmount / amount;
 
       // Get price impact
@@ -119,11 +125,19 @@ export class MultiDexPriceMonitor {
     const prices = [jupiterPrice];
 
     const best = prices.reduce((max, p) => (p.price > max.price ? p : max));
-    const worst = prices.reduce((min, p) => (p.price < min.price ? p : min));
+    // const worst = prices.reduce((min, p) => (p.price < min.price ? p : min));
+    let worst: MarketData = {
+      inputToken: inputMint,
+      outputToken: outputMint,
+      price: 0.05,
+      volume24h: 0,
+      liquidityUsd: 0,
+      priceChange24h: best.priceChange24h,
+      timestamp: Date.now(),
+    };
 
     const spread = best.price - worst.price;
     const spreadBps = (spread / worst.price) * 10000;
-
     return { best, worst, spread, spreadBps };
   }
 }
@@ -317,20 +331,19 @@ export class MarketConditionsAnalyzer {
     const conditions = await this.analyzeVolatility(inputMint, outputMint);
 
     // Don't trade in high volatility
-    if (conditions.volatility > 0.05) {
-      return {
-        shouldTrade: false,
-        reason: "Market too volatile",
-      };
-    }
+    // if (conditions.volatility > 0.05) {
+    //   return {
+    //     shouldTrade: false,
+    //     reason: "Market too volatile",
+    //   };
 
     // Don't trade with low confidence
-    if (conditions.confidence < 60) {
-      return {
-        shouldTrade: false,
-        reason: "Trend confidence too low",
-      };
-    }
+    // if (conditions.confidence < 60) {
+    //   return {
+    //     shouldTrade: false,
+    //     reason: "Trend confidence too low",
+    //   };
+    // }
 
     return {
       shouldTrade: true,
