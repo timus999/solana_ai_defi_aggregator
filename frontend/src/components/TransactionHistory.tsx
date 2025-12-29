@@ -256,13 +256,13 @@ export default function TransactionHistory() {
   }
 
   return (
-    <div className="glass rounded-xl p-6 border border-gray-800">
+    <div className="bg-white rounded-xl p-6 ">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-bold text-white">Recent Transactions</h2>
+        <h2 className="text-xl font-bold text-primary">Recent Transactions</h2>
         <button
           onClick={fetchTransactions}
           disabled={loading}
-          className="text-blue-400 hover:text-blue-300 disabled:opacity-50 transition-colors"
+          className="text-purple-500 hover:text-purple-800 disabled:opacity-50 transition-colors"
         >
           <RefreshCw className={`w-5 h-5 ${loading ? "animate-spin" : ""}`} />
         </button>
@@ -273,7 +273,7 @@ export default function TransactionHistory() {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="animate-pulse flex items-center space-x-4 p-4 glass rounded-lg border border-gray-800"
+              className="animate-pulse flex items-center space-x-4 p-4 bg-white"
             >
               <div className="w-10 h-10 bg-gray-700 rounded-full" />
               <div className="flex-1 space-y-2">
@@ -284,22 +284,22 @@ export default function TransactionHistory() {
           ))}
         </div>
       ) : transactions.length === 0 ? (
-        <p className="text-gray-400 text-center py-8">No transactions yet</p>
+        <p className="text-primary text-center py-8">No transactions yet</p>
       ) : (
         <div className="space-y-3">
           {transactions.map((tx) => (
             <div
               key={tx.signature}
-              className="flex items-center justify-between p-4 glass rounded-lg border border-gray-800 hover:border-gray-700 transition-colors"
+              className="flex items-center justify-between p-4 rounded-lg  transition-colors"
             >
               <div className="flex items-center space-x-4">
-                <div className="p-2 glass rounded-full border border-gray-800">
+                <div className="p-2 bg-white rounded-full border border-gray-800">
                   {getIcon(tx.type)}
                 </div>
 
                 <div>
                   <div className="flex items-center space-x-2">
-                    <span className="font-medium text-white">
+                    <span className="font-medium text-primary">
                       {getTypeLabel(tx.type)}
                     </span>
                     <span

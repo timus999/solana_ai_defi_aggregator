@@ -184,24 +184,26 @@ export default function JupiterSwap() {
 
   return (
     <div className="max-w-lg mx-auto">
-      <div className="glass rounded-xl p-6 border border-gray-800">
+      <div className="rounded-xl p-6 bg-white">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-white">Swap</h2>
+          <h2 className="text-2xl font-bold text-primary">Swap</h2>
           <button
             onClick={() => setShowSettings(!showSettings)}
-            className="glass p-2 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors"
+            className="bg-white p-2 rounded-lg  transition-colors"
           >
-            <Zap className="w-5 h-5 text-gray-400" />
+            <Zap className="w-5 h-5 text-gray-500" />
           </button>
         </div>
 
         {/* Settings Panel */}
         {showSettings && (
-          <div className="mb-6 glass rounded-lg p-4 border border-gray-800">
-            <h3 className="text-sm font-semibold text-white mb-3">Settings</h3>
+          <div className="mb-6 bg-white rounded-lg p-4 ">
+            <h3 className="text-sm font-semibold text-primary mb-3">
+              Settings
+            </h3>
             <div>
-              <label className="block text-sm text-gray-400 mb-2">
+              <label className="block text-sm text-primary mb-2">
                 Slippage Tolerance
               </label>
               <div className="flex space-x-2">
@@ -211,7 +213,7 @@ export default function JupiterSwap() {
                     onClick={() => setSlippage(bps)}
                     className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
                       slippage === bps
-                        ? "bg-blue-600 text-white"
+                        ? "bg-blue-600 text-gray-200"
                         : "glass border border-gray-700 text-gray-400 hover:border-gray-600"
                     }`}
                   >
@@ -224,10 +226,10 @@ export default function JupiterSwap() {
         )}
 
         {/* From Token */}
-        <div className="glass rounded-lg p-4 border border-gray-800 mb-2">
+        <div className="glass rounded-lg p-4  mb-2">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-400">From</span>
-            <span className="text-sm text-gray-400">Balance: 0.00</span>
+            <span className="text-sm text-primary">From</span>
+            <span className="text-sm text-primary">Balance: 0.00</span>
           </div>
 
           <div className="flex items-center space-x-3">
@@ -236,14 +238,14 @@ export default function JupiterSwap() {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.0"
-              className="flex-1 bg-transparent text-2xl font-bold text-white outline-none"
+              className="flex-1 bg-transparent text-2xl font-bold text-primary outline-none"
             />
 
-            <button className="flex items-center space-x-2 glass px-4 py-2 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors">
-              <span className="font-semibold text-white">
+            <button className="flex items-center space-x-2 glass px-4 py-2 rounded-lg  transition-colors">
+              <span className="font-semibold text-primary">
                 {fromToken.symbol}
               </span>
-              <ChevronDown className="w-4 h-4 text-gray-400" />
+              <ChevronDown className="w-4 h-4 text-gray-500" />
             </button>
           </div>
         </div>
@@ -252,14 +254,14 @@ export default function JupiterSwap() {
         <div className="flex justify-center -my-2 relative z-10">
           <button
             onClick={switchTokens}
-            className="glass p-2 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors"
+            className="bg-white p-2 rounded-lg  transition-colors"
           >
-            <ArrowDownUp className="w-5 h-5 text-gray-400" />
+            <ArrowDownUp className="w-5 h-5 text-primary" />
           </button>
         </div>
 
         {/* To Token */}
-        <div className="glass rounded-lg p-4 border border-gray-800 mb-4">
+        <div className="bg-white rounded-lg p-4  mb-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-gray-400">To</span>
             <span className="text-sm text-gray-400">Balance: 0.00</span>

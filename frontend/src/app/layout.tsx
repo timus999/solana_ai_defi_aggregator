@@ -19,12 +19,23 @@ import "@solana/wallet-adapter-react-ui/styles.css";
 import "./globals.css";
 import WalletButton from "@/components/WalletButton";
 import Link from "next/link";
+import { useState } from "react";
+import { set } from "@coral-xyz/anchor/dist/cjs/utils/features";
+
+type TabType =
+  | "Dashboard"
+  | "Agents"
+  | "Deposit"
+  | "Withdraw"
+  | "Swap"
+  | "Strategies";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const [selectedTab, setSelectedTab] = useState<TabType>("Dashboard");
   // Get network from environment or default to devnet
   const network =
     (process.env.NEXT_PUBLIC_NETWORK as WalletAdapterNetwork) ||
@@ -37,6 +48,15 @@ export default function RootLayout({
     }
     return clusterApiUrl(network);
   }, [network]);
+
+  const tabs = [
+    { id: "dashboard", label: "Dashboard" },
+    { id: "agents", label: "Agents" },
+    { id: "deposit", label: "Deposit" },
+    { id: "withdraw", label: "Withdraw" },
+    { id: "swap", label: "Swap" },
+    { id: "strategies", label: "Strategies" },
+  ];
 
   // Configure supported wallets
   const wallets = useMemo(
@@ -58,7 +78,7 @@ export default function RootLayout({
         <ConnectionProvider endpoint={endpoint}>
           <WalletProvider wallets={wallets} autoConnect>
             <WalletModalProvider>
-              <div className="min-h-screen bg-linear-to-br from-gray-800 via-gray-500 to-gray-900">
+              <div className="min-h-screen bg-gray-200">
                 {/* Navigation Bar */}
                 <nav className="pt-2">
                   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -66,7 +86,7 @@ export default function RootLayout({
                       {/* Logo */}
                       <div className="flex items-center space-x-2">
                         <div className="w-8 h-8 bg-linear-to-br from-black-500 to-gray-600 rounded-lg" />
-                        <span className="text-xl font-bold text-white">
+                        <span className="text-xl font-bold text-gray-700">
                           AgentFlow
                         </span>
                       </div>
@@ -75,25 +95,32 @@ export default function RootLayout({
                       <div className="hidden md:flex  items-center space-x-14">
                         <Link
                           href="/"
-                          className="text-gray-300 hover:text-white transition"
+                          className="text-gray-700 hover:text-blue-500 transition"
                         >
                           Dashboard
                         </Link>
                         <Link
+                          href="/agents"
+                          className="text-gray-700 hover:text-blue-500 transition"
+                        >
+                          Agents
+                        </Link>
+
+                        <Link
                           href="/swap"
-                          className="text-gray-300 hover:text-white transition"
+                          className="text-gray-700 hover:text-blue-500 transition"
                         >
                           Swap
                         </Link>
                         <Link
                           href="/withdraw"
-                          className="text-gray-300 hover:text-white transition"
+                          className="text-gray-700 hover:text-blue-500 transition"
                         >
                           Withdraw
                         </Link>
                         <Link
                           href="/strategies"
-                          className="text-gray-300 hover:text-white transition"
+                          className="text-gray-700 hover:text-blue-500 transition"
                         >
                           Strategies
                         </Link>

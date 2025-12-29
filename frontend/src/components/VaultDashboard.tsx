@@ -21,7 +21,7 @@ export default function VaultDashboard() {
   return (
     <div className="space-y-6">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 ">
         {/* Total Value Locked */}
         <StatCard
           title="Total Value Locked"
@@ -52,33 +52,41 @@ export default function VaultDashboard() {
       {/* User Position */}
       {userBalance && (
         <div className="glass rounded-xl p-6 border border-gray-800">
-          <h2 className="text-2xl font-bold text-white mb-6">Your Position</h2>
+          <h2 className="text-2xl font-bold text-gray-700  mb-6">
+            Your Position
+          </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Your Shares */}
             <div>
-              <div className="text-gray-400 text-sm mb-2">Your Shares</div>
-              <div className="text-3xl font-bold text-white">
+              <div className="text-gray-600 text-sm mb-2 font-bold">
+                Your Shares
+              </div>
+              <div className="text-3xl font-bold text-gray-600">
                 {formatNumber(vaultInfo.userShares, 2)}
               </div>
-              <div className="text-gray-400 text-sm mt-1">
+              <div className="text-gray-600 text-sm mt-1">
                 ≈ {formatCurrency(vaultInfo.userValue)}
               </div>
             </div>
 
             {/* Your Balances */}
             <div>
-              <div className="text-gray-400 text-sm mb-2">Wallet Balance</div>
+              <div className="text-gray-700 font-bold text-sm mb-2">
+                Wallet Balance
+              </div>
               <div className="space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-300">USDC</span>
+                  <span className="text-gray-600">USDC</span>
                   <span className="text-white font-semibold">
-                    {formatNumber(userBalance.usdc, 2)}
+                    {userBalance.usdc
+                      ? formatNumber(userBalance.usdc, 2)
+                      : "0.00"}
                   </span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-300">SOL</span>
-                  <span className="text-white font-semibold">
+                  <span className="text-gray-600">SOL</span>
+                  <span className="text-gray-600 font-semibold">
                     {formatNumber(userBalance.sol, 4)}
                   </span>
                 </div>
@@ -90,13 +98,13 @@ export default function VaultDashboard() {
           <div className="flex gap-4 mt-6">
             <a
               href="/deposit"
-              className="flex-1 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition text-center"
+              className="flex-1 bg-gray-600 hover:bg-gray-200 hover:text-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition text-center"
             >
               Deposit
             </a>
             <a
               href="/withdraw"
-              className="flex-1 bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition border border-gray-700 text-center"
+              className="flex-1 bg-gray-800 hover:bg-gray-200 hover:text-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition text-center"
             >
               Withdraw
             </a>
@@ -105,8 +113,8 @@ export default function VaultDashboard() {
       )}
 
       {/* Vault Info */}
-      <div className="glass rounded-xl p-6 border border-gray-800">
-        <h2 className="text-2xl font-bold text-white mb-6">
+      <div className="glass rounded-xl p-6 border border-gray-400">
+        <h2 className="text-2xl font-bold text-gray-700 mb-6">
           Vault Information
         </h2>
 
@@ -135,7 +143,9 @@ export default function VaultDashboard() {
 
       {/* Recent Activity - Placeholder */}
       <div className="glass rounded-xl p-6 border border-gray-800">
-        <h2 className="text-2xl font-bold text-white mb-6">Recent Activity</h2>
+        <h2 className="text-2xl font-bold text-gray-700 mb-6">
+          Recent Activity
+        </h2>
         <div className="text-gray-400 text-center py-8">
           No recent transactions
         </div>
@@ -157,13 +167,13 @@ function StatCard({
   icon: string;
 }) {
   return (
-    <div className="glass rounded-xl p-6 border border-gray-800 card-hover">
+    <div className="bg-white rounded-xl p-6 card-hover">
       <div className="flex items-start justify-between mb-4">
-        <div className="text-gray-400 text-sm">{title}</div>
+        <div className="text-gray-700 text-sm font-bold">{title}</div>
         <div className="text-2xl">{icon}</div>
       </div>
-      <div className="text-3xl font-bold text-white mb-2">{value}</div>
-      <div className="text-gray-400 text-sm">{subtitle}</div>
+      <div className="text-3xl font-bold text-gray-700 mb-2">{value}</div>
+      <div className="text-gray-600 text-sm">{subtitle}</div>
     </div>
   );
 }
@@ -181,7 +191,7 @@ function InfoRow({
   return (
     <div className="flex justify-between items-center py-2 border-b border-gray-800 last:border-0">
       <span className="text-gray-400">{label}</span>
-      <span className={`text-white ${mono ? "font-mono text-xs" : ""}`}>
+      <span className={`text-gray-400 ${mono ? "font-mono text-xs" : ""}`}>
         {mono ? `${value.slice(0, 8)}...${value.slice(-8)}` : value}
       </span>
     </div>
@@ -208,14 +218,14 @@ function LoadingSkeleton() {
 // Error Display
 function ErrorDisplay({ error }: { error: string }) {
   return (
-    <div className="glass rounded-xl p-6 border border-red-900/50 bg-red-900/10">
+    <div className="bg-white rounded-xl p-6 border border-red-900/50 ">
       <div className="flex items-center space-x-3">
         <div className="text-3xl">⚠️</div>
         <div>
           <div className="text-red-400 font-semibold mb-1">
             Error Loading Vault
           </div>
-          <div className="text-gray-400 text-sm">{error}</div>
+          <div className="text-gray-700 text-sm">{error}</div>
         </div>
       </div>
     </div>
@@ -225,10 +235,10 @@ function ErrorDisplay({ error }: { error: string }) {
 // No Vault Data
 function NoVaultData() {
   return (
-    <div className="glass rounded-xl p-12 border border-gray-800 text-center">
+    <div className="bg-white rounded-xl p-12  text-center">
       <div className="text-6xl mb-4">🏦</div>
-      <div className="text-2xl font-bold text-white mb-2">No Vault Data</div>
-      <div className="text-gray-400 mb-6">
+      <div className="text-2xl font-bold text-gray-700 mb-2">No Vault Data</div>
+      <div className="text-gray-500 mb-6">
         The vault has not been initialized yet.
       </div>
       <div className="text-sm text-gray-500">

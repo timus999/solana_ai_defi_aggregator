@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
-import { getAccount, getAssociatedTokenAddress } from "@solana/spl-token";
 import { useVault } from "@/hooks/useVault";
 import {
   TrendingUp,
@@ -127,8 +126,8 @@ export default function Portfolio() {
 
   if (vaultLoading || loading) {
     return (
-      <div className="glass rounded-xl p-6 border border-gray-800">
-        <h2 className="text-xl font-bold text-white mb-4">Portfolio</h2>
+      <div className="bg-foreground rounded-xl p-6 ">
+        <h2 className="text-xl font-bold text-primary mb-4">Portfolio</h2>
         <div className="animate-pulse space-y-4">
           <div className="h-24 bg-gray-700/30 rounded" />
           <div className="h-32 bg-gray-700/30 rounded" />
@@ -141,22 +140,24 @@ export default function Portfolio() {
   return (
     <div className="space-y-6">
       {/* Total Value Card */}
-      <div className="glass rounded-xl p-6 border border-gray-800 bg-gradient-to-br from-blue-600/20 to-purple-600/20">
+      <div className="bg-white rounded-xl p-6 ">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg text-gray-300">Total Portfolio Value</h2>
+          <h2 className="text-lg text-primary font-bold">
+            Total Portfolio Value
+          </h2>
           <button
             onClick={() => {
               refetch();
               fetchPositions();
             }}
-            className="text-gray-400 hover:text-white transition-colors"
+            className="text-gray-400 hover:text-gray-600 transition-colors"
           >
             <RefreshCw className="w-5 h-5" />
           </button>
         </div>
 
         <div className="mb-4">
-          <p className="text-4xl font-bold text-white mb-2">
+          <p className="text-4xl font-bold text-primary mb-2">
             $
             {totalValue.toLocaleString("en-US", {
               minimumFractionDigits: 2,
@@ -186,22 +187,22 @@ export default function Portfolio() {
         </div>
 
         {vaultInfo && (
-          <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-700">
+          <div className="grid grid-cols-3 gap-4 pt-4 border-t border-gray-300">
             <div>
-              <p className="text-sm text-gray-400 mb-1">Vault Shares</p>
-              <p className="font-semibold text-white">
+              <p className="text-sm text-primary mb-1">Vault Shares</p>
+              <p className="font-semibold text-primary">
                 {vaultInfo.userShares.toFixed(2)}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-400 mb-1">Share Price</p>
-              <p className="font-semibold text-white">
+              <p className="text-sm text-primary mb-1">Share Price</p>
+              <p className="font-semibold text-primary">
                 ${vaultInfo.sharePrice.toFixed(4)}
               </p>
             </div>
             <div>
-              <p className="text-sm text-gray-400 mb-1">Vault Value</p>
-              <p className="font-semibold text-white">
+              <p className="text-sm text-primary b-1">Vault Value</p>
+              <p className="font-semibold text-primary">
                 ${vaultInfo.userValue.toFixed(2)}
               </p>
             </div>
@@ -210,14 +211,14 @@ export default function Portfolio() {
       </div>
 
       {/* Positions */}
-      <div className="glass rounded-xl p-6 border border-gray-800">
+      <div className="bg-white rounded-xl p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold text-white">Your Positions</h3>
+          <h3 className="text-xl font-bold text-primary">Your Positions</h3>
           <PieChart className="w-5 h-5 text-gray-400" />
         </div>
 
         {positions.length === 0 ? (
-          <p className="text-gray-400 text-center py-8">
+          <p className="text-primary text-center py-8">
             No positions yet. Make your first deposit!
           </p>
         ) : (
@@ -228,12 +229,12 @@ export default function Portfolio() {
                 className="flex items-center justify-between p-4 glass rounded-lg border border-gray-800 hover:border-gray-700 transition-colors"
               >
                 <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-200 flex items-center justify-center text-white font-bold">
+                  <div className="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold">
                     {position.token[0]}
                   </div>
 
                   <div>
-                    <p className="font-medium text-white">{position.token}</p>
+                    <p className="font-medium text-primary">{position.token}</p>
                     <p className="text-sm text-gray-400">
                       {position.amount.toFixed(
                         position.token === "USDC" ? 2 : 4
@@ -244,7 +245,7 @@ export default function Portfolio() {
                 </div>
 
                 <div className="text-right">
-                  <p className="font-medium text-white">
+                  <p className="font-medium text-primary">
                     ${position.value.toFixed(2)}
                   </p>
                   <div className="flex items-center justify-end space-x-2 text-sm">
@@ -270,7 +271,7 @@ export default function Portfolio() {
                   <div className="flex items-center space-x-2">
                     <div className="w-16 bg-gray-700 rounded-full h-2">
                       <div
-                        className="bg-gradient-to-r from-blue-500 to-purple-200 h-2 rounded-full"
+                        className="bg-purple-600 h-2 rounded-full"
                         style={{ width: `${position.percentage}%` }}
                       />
                     </div>
@@ -287,20 +288,20 @@ export default function Portfolio() {
 
       {/* Performance Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="glass rounded-lg p-4 border border-gray-800">
+        <div className="bg-white rounded-lg p-4 ">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-sm text-gray-400">APY</p>
+            <p className="text-sm text-primary">APY</p>
             <Percent className="w-4 h-4 text-gray-500" />
           </div>
-          <p className="text-2xl font-bold text-white">
+          <p className="text-2xl font-bold text-primary">
             {vaultInfo?.apy.toFixed(2) || "0.00"}%
           </p>
         </div>
 
-        <div className="glass rounded-lg p-4 border border-gray-800">
+        <div className="bg-white rounded-lg p-4 ">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-sm text-gray-400">Total P&L</p>
-            <DollarSign className="w-4 h-4 text-gray-500" />
+            <p className="text-sm text-primary">Total P&L</p>
+            <DollarSign className="w-4 h-4 text-primary" />
           </div>
           <p
             className={`text-2xl font-bold ${
@@ -311,12 +312,12 @@ export default function Portfolio() {
           </p>
         </div>
 
-        <div className="glass rounded-lg p-4 border border-gray-800">
+        <div className="bg-white rounded-lg p-4 ">
           <div className="flex items-center justify-between mb-2">
-            <p className="text-sm text-gray-400">Positions</p>
-            <PieChart className="w-4 h-4 text-gray-500" />
+            <p className="text-sm text-primary">Positions</p>
+            <PieChart className="w-4 h-4 text-primary" />
           </div>
-          <p className="text-2xl font-bold text-white">{positions.length}</p>
+          <p className="text-2xl font-bold text-primary">{positions.length}</p>
         </div>
       </div>
     </div>
