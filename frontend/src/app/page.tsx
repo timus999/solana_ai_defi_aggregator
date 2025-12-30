@@ -19,7 +19,7 @@ export default function Home() {
 
         {!connected && (
           <div className="mt-6">
-            <div className="text-gray-500 text-sm mb-3">
+            <div className="text-gray-400 text-sm mb-3">
               Connect your wallet to get started
             </div>
           </div>
@@ -41,7 +41,7 @@ export default function Home() {
               <VaultDashboard />
 
               {/* Quick Action Buttons */}
-              <div className="glass rounded-xl p-6 border border-gray-800">
+              {/*<div className="glass rounded-xl p-6 border border-gray-800">
                 <h3 className="text-lg font-bold text-white mb-4">
                   Quick Actions
                 </h3>
@@ -57,7 +57,7 @@ export default function Home() {
                     </button>
                   </Link>
                 </div>
-              </div>
+              </div>*/}
             </div>
           </div>
 
@@ -73,13 +73,15 @@ export default function Home() {
 
 function WelcomeScreen() {
   return (
-    <div className="glass rounded-xl p-12 border border-gray-800 text-center">
+    <div className="bg-gray-50 rounded-xl p-12 text-center">
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Icon */}
         <div className="text-6xl mb-4">🤖</div>
 
         {/* Title */}
-        <h2 className="text-3xl font-bold text-white">Welcome to AgentFlow</h2>
+        <h2 className="text-3xl font-bold text-primary">
+          Welcome to AgentFlow
+        </h2>
 
         {/* Description */}
         <p className="text-gray-400 text-lg">
@@ -107,23 +109,23 @@ function WelcomeScreen() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-6 mt-12 pt-8 border-t border-gray-800">
+        <div className="grid grid-cols-3 gap-6 mt-12 pt-8">
           <div>
-            <div className="text-2xl font-bold text-white">12.5%</div>
+            <div className="text-2xl font-bold text-gray-500">12.5%</div>
             <div className="text-gray-400 text-sm">Average APY</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-white">$0</div>
+            <div className="text-2xl font-bold text-gray-500">$0</div>
             <div className="text-gray-400 text-sm">Total Value Locked</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-white">0</div>
+            <div className="text-2xl font-bold text-gray-500">0</div>
             <div className="text-gray-400 text-sm">Active Users</div>
           </div>
         </div>
 
         {/* CTA */}
-        <div className="mt-8 text-gray-500 text-sm">
+        <div className="mt-8 text-gray-400 text-sm">
           👆 Connect your wallet above to start earning
         </div>
       </div>
@@ -141,10 +143,10 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="glass rounded-lg p-6 border border-gray-800">
+    <div className="bg-gray-100 rounded-lg p-6 ">
       <div className="text-3xl mb-3">{icon}</div>
-      <div className="text-white font-semibold mb-2">{title}</div>
-      <div className="text-gray-400 text-sm">{description}</div>
+      <div className="text-primary font-semibold mb-2">{title}</div>
+      <div className="text-gray-500 text-sm">{description}</div>
     </div>
   );
 }

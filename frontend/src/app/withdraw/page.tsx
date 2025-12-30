@@ -53,7 +53,7 @@ export default function WithdrawPage() {
       {/* Back Button */}
       <Link
         href="/"
-        className="inline-flex items-center text-gray-400 hover:text-white transition"
+        className="inline-flex items-center text-gray-400 hover:text-gray-700 transition"
       >
         <span className="mr-2">←</span>
         Back to Dashboard
@@ -79,15 +79,15 @@ export default function WithdrawPage() {
       {/* Main Card */}
       <div className="glass rounded-2xl p-8 border border-gray-800 space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-white">Withdraw</h1>
+          <h1 className="text-3xl font-bold text-primary">Withdraw</h1>
           <div className="text-4xl">💸</div>
         </div>
 
         {/* Your Position */}
-        <div className="p-4 bg-black/30 rounded-xl">
-          <div className="text-gray-400 text-sm mb-2">Your Position</div>
+        <div className="p-4 bg-gray-100 rounded-xl">
+          <div className="text-primary text-sm mb-2">Your Position</div>
           <div className="flex items-baseline space-x-2">
-            <div className="text-3xl font-bold text-white">
+            <div className="text-3xl font-bold text-gray-400">
               {formatNumber(userShares, 2)}
             </div>
             <div className="text-gray-500">shares</div>
@@ -100,8 +100,10 @@ export default function WithdrawPage() {
         {/* Percentage Slider */}
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <label className="text-gray-400 text-sm">Withdraw Amount</label>
-            <div className="text-2xl font-bold text-white">{percentage}%</div>
+            <label className="text-primary text-sm">Withdraw Amount</label>
+            <div className="text-2xl font-bold text-gray-400">
+              {percentage}%
+            </div>
           </div>
 
           {/* Custom Slider */}
@@ -128,7 +130,7 @@ export default function WithdrawPage() {
                 className={`py-2 px-4 rounded-lg text-sm font-semibold transition ${
                   percentage === preset
                     ? "bg-gray-600 text-white"
-                    : "bg-gray-800 text-gray-400 hover:bg-gray-700"
+                    : "bg-gray-800 text-gray-200 hover:bg-gray-700"
                 }`}
               >
                 {preset}%
@@ -138,28 +140,28 @@ export default function WithdrawPage() {
         </div>
 
         {/* You Will Receive */}
-        <div className="p-4 bg-black/30 rounded-xl border border-gray-800 space-y-3">
+        <div className="p-4 bg-gray-100 rounded-xl space-y-3">
           <div className="text-gray-400 text-sm">You will receive</div>
 
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">Shares to burn</span>
-              <span className="text-white font-semibold">
+              <span className="text-primary">Shares to burn</span>
+              <span className="text-gray-400 font-semibold">
                 {formatNumber(sharesToWithdraw, 2)}
               </span>
             </div>
 
             <div className="flex justify-between items-center">
-              <span className="text-gray-400">USDC amount</span>
-              <span className="text-white font-semibold">
+              <span className="text-primary">USDC amount</span>
+              <span className="text-gray-400 font-semibold">
                 {formatNumber(usdcToReceive, 2)} USDC
               </span>
             </div>
 
-            <div className="pt-2 border-t border-gray-800">
+            <div className="pt-2 border-t border-gray-400">
               <div className="flex justify-between items-center">
-                <span className="text-gray-400">USD value</span>
-                <span className="text-xl font-bold text-white">
+                <span className="text-primary">USD value</span>
+                <span className="text-xl font-bold text-gray-400">
                   {formatCurrency(usdcToReceive)}
                 </span>
               </div>
@@ -169,17 +171,17 @@ export default function WithdrawPage() {
 
         {/* Remaining Position */}
         {percentage < 100 && (
-          <div className="p-4 bg-black/20 rounded-xl border border-gray-800">
+          <div className="p-4 rounded-xl bg-gray-100">
             <div className="text-gray-400 text-sm mb-2">After withdrawal</div>
             <div className="flex justify-between text-sm">
-              <span className="text-gray-400">Remaining shares</span>
-              <span className="text-white">
+              <span className="text-primary">Remaining shares</span>
+              <span className="text-gray-400">
                 {formatNumber(userShares - sharesToWithdraw, 2)}
               </span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-gray-400">Remaining value</span>
-              <span className="text-white">
+              <span className="text-primary">Remaining value</span>
+              <span className="text-gray-400">
                 {formatCurrency(
                   (userShares - sharesToWithdraw) * (vaultInfo?.sharePrice || 1)
                 )}

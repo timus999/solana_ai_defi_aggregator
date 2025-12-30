@@ -22,7 +22,9 @@ export const AuditTrail: React.FC<{ executions: Execution[] }> = ({
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
-      <h3 className="text-lg font-semibold mb-4">📜 Execution History</h3>
+      <h3 className="text-lg font-semibold mb-4 text-primary">
+        📜 Execution History
+      </h3>
       <div className="space-y-3">
         {executions.map((execution) => {
           const statusIcon = getStatusIcon(execution.status);
@@ -36,7 +38,7 @@ export const AuditTrail: React.FC<{ executions: Execution[] }> = ({
                   {formatTime(execution.timestamp)}
                 </span>
                 <span className={statusIcon.color}>{statusIcon.icon}</span>
-                <span className="font-medium">
+                <span className="font-medium text-gray-400">
                   {execution.action} {execution.strategyName}
                 </span>
               </div>

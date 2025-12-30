@@ -169,10 +169,10 @@ export default function StrategyMarketplace() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-3xl font-bold text-primary mb-2">
             Strategy Marketplace
           </h1>
-          <p className="text-gray-400">
+          <p className="text-gray-500">
             Discover and purchase trading strategies from the community
           </p>
         </div>
@@ -187,27 +187,27 @@ export default function StrategyMarketplace() {
 
       {/* Stats Bar */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="glass rounded-lg p-4 border border-gray-800">
+        <div className="bg-green-50 rounded-lg p-4 ">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-400 text-sm">Total Strategies</span>
+            <span className="text-primary text-sm">Total Strategies</span>
             <Store className="w-4 h-4 text-gray-500" />
           </div>
-          <p className="text-2xl font-bold text-white">{strategies.length}</p>
+          <p className="text-2xl font-bold text-primary">{strategies.length}</p>
         </div>
 
-        <div className="glass rounded-lg p-4 border border-gray-800">
+        <div className="bg-blue-50 rounded-lg p-4 ">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-400 text-sm">Total Purchases</span>
+            <span className="text-primary text-sm">Total Purchases</span>
             <Users className="w-4 h-4 text-gray-500" />
           </div>
-          <p className="text-2xl font-bold text-white">
+          <p className="text-2xl font-bold text-primary">
             {strategies.reduce((sum, s) => sum + s.totalPurchases, 0)}
           </p>
         </div>
 
-        <div className="glass rounded-lg p-4 border border-gray-800">
+        <div className="bg-yellow-50 rounded-lg p-4 ">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-400 text-sm">Total Profit</span>
+            <span className="text-primary text-sm">Total Profit</span>
             <TrendingUp className="w-4 h-4 text-gray-500" />
           </div>
           <p className="text-2xl font-bold text-green-400">
@@ -218,12 +218,12 @@ export default function StrategyMarketplace() {
           </p>
         </div>
 
-        <div className="glass rounded-lg p-4 border border-gray-800">
+        <div className="rounded-lg p-4 bg-red-50">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-400 text-sm">Avg Success Rate</span>
+            <span className="text-primary text-sm">Avg Success Rate</span>
             <Star className="w-4 h-4 text-gray-500" />
           </div>
-          <p className="text-2xl font-bold text-white">
+          <p className="text-2xl font-bold text-primary">
             {strategies.length > 0
               ? (
                   strategies.reduce((sum, s) => sum + s.successRate, 0) /
@@ -236,7 +236,7 @@ export default function StrategyMarketplace() {
       </div>
 
       {/* Filters & Search */}
-      <div className="glass rounded-lg p-4 border border-gray-800">
+      <div className="rounded-lg p-4 bg-white">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Search */}
           <div className="flex-1 relative">
@@ -246,7 +246,7 @@ export default function StrategyMarketplace() {
               placeholder="Search strategies..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-blue-500"
+              className="bg-gray-100 w-full pl-10 pr-4 py-2 rounded-lg text-primary placeholder-gray-400 focus:outline-none"
             />
           </div>
 
@@ -256,7 +256,7 @@ export default function StrategyMarketplace() {
             <select
               value={filter}
               onChange={(e) => setFilter(e.target.value as FilterType)}
-              className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500"
+              className="px-4 py-2 bg-blue-500 rounded-lg text-white font-bold"
             >
               <option value="all">All Strategies</option>
               <option value="popular">Popular</option>
@@ -269,7 +269,7 @@ export default function StrategyMarketplace() {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortType)}
-            className="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:border-blue-500"
+            className="px-4 py-2 rounded-lg text-white bg-purple-500 font-bold"
           >
             <option value="purchases">Most Purchased</option>
             <option value="profit">Highest Profit</option>
@@ -283,18 +283,15 @@ export default function StrategyMarketplace() {
       {loading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div
-              key={i}
-              className="glass rounded-lg p-6 border border-gray-800 animate-pulse"
-            >
-              <div className="h-6 bg-gray-700 rounded w-3/4 mb-4" />
-              <div className="h-4 bg-gray-700 rounded w-full mb-2" />
-              <div className="h-4 bg-gray-700 rounded w-5/6" />
+            <div key={i} className="rounded-lg p-6 bg-gray-200 animate-pulse">
+              <div className="h-6 bg-gray-200 rounded w-3/4 mb-4" />
+              <div className="h-4 bg-gray-200 rounded w-full mb-2" />
+              <div className="h-4 bg-gray-200 rounded w-5/6" />
             </div>
           ))}
         </div>
       ) : filteredStrategies.length === 0 ? (
-        <div className="glass rounded-lg p-12 border border-gray-800 text-center">
+        <div className="bg-white rounded-lg p-12">
           <p className="text-gray-400">
             No strategies found. Try adjusting your filters.
           </p>
@@ -329,7 +326,7 @@ function StrategyCard({ strategy }: { strategy: Strategy }) {
 
   return (
     <Link href={`/strategies/${strategy.publicKey.toString()}`}>
-      <div className="glass rounded-lg p-6 border border-gray-800 hover:border-gray-700 transition-all cursor-pointer group">
+      <div className="bg-white rounded-lg p-6 cursor-pointer group hover:bg-blue-50 card-hover">
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center space-x-3">
@@ -337,14 +334,14 @@ function StrategyCard({ strategy }: { strategy: Strategy }) {
               {getStrategyTypeIcon(strategy.strategyType)}
             </div>
             <div>
-              <h3 className="text-lg font-bold text-white group-hover:text-blue-400 transition-colors">
+              <h3 className="text-lg font-bold text-gray-700 group-hover:text-blue-400 transition-colors">
                 {strategy.name}
               </h3>
-              <p className="text-sm text-gray-400">{strategy.strategyType}</p>
+              <p className="text-sm text-gray-500">{strategy.strategyType}</p>
             </div>
           </div>
 
-          <div className="flex items-center space-x-1 text-yellow-400">
+          <div className="flex items-center space-x-1 text-orange-600">
             <Star className="w-4 h-4 fill-current" />
             <span className="text-sm font-semibold">
               {strategy.successRate.toFixed(0)}%
@@ -361,13 +358,13 @@ function StrategyCard({ strategy }: { strategy: Strategy }) {
         <div className="grid grid-cols-3 gap-2 mb-4 pb-4 border-b border-gray-800">
           <div>
             <p className="text-xs text-gray-500 mb-1">Purchases</p>
-            <p className="text-sm font-semibold text-white">
+            <p className="text-sm font-semibold text-gray-400">
               {strategy.totalPurchases}
             </p>
           </div>
           <div>
             <p className="text-xs text-gray-500 mb-1">Executions</p>
-            <p className="text-sm font-semibold text-white">
+            <p className="text-sm font-semibold text-gray-400">
               {strategy.totalExecutions}
             </p>
           </div>
@@ -387,12 +384,12 @@ function StrategyCard({ strategy }: { strategy: Strategy }) {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs text-gray-500">Price</p>
-            <p className="text-xl font-bold text-white">
+            <p className="text-xl font-bold text-primary">
               {strategy.price} USDC
             </p>
           </div>
 
-          <button className="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg transition-colors">
+          <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg transition-colors">
             Buy Now
           </button>
         </div>

@@ -92,7 +92,7 @@ export default function RootLayout({
                       </div>
 
                       {/* Navigation Links */}
-                      <div className="hidden md:flex  items-center space-x-14">
+                      <div className="hidden md:flex  items-center space-x-14 font-semibold">
                         <Link
                           href="/"
                           className="text-gray-700 hover:text-blue-500 transition"
@@ -112,6 +112,13 @@ export default function RootLayout({
                         >
                           Swap
                         </Link>
+                        <Link
+                          href="/deposit"
+                          className="text-gray-700 hover:text-blue-500 transition"
+                        >
+                          Deposit
+                        </Link>
+
                         <Link
                           href="/withdraw"
                           className="text-gray-700 hover:text-blue-500 transition"

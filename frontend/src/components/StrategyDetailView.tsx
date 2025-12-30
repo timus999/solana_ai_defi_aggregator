@@ -186,12 +186,12 @@ export default function StrategyDetailView({
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="glass rounded-xl p-8 border border-gray-800 animate-pulse">
-          <div className="h-8 bg-gray-700 rounded w-1/3 mb-4" />
-          <div className="h-4 bg-gray-700 rounded w-2/3 mb-8" />
+        <div className="glass rounded-xl p-8  animate-pulse">
+          <div className="h-8 bg-gray-300 rounded w-1/3 mb-4" />
+          <div className="h-4 bg-gray-300 rounded w-2/3 mb-8" />
           <div className="grid grid-cols-4 gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="h-20 bg-gray-700 rounded" />
+              <div key={i} className="h-20 bg-gray-300 rounded" />
             ))}
           </div>
         </div>
@@ -202,7 +202,7 @@ export default function StrategyDetailView({
   if (error || !strategy) {
     return (
       <div className="max-w-4xl mx-auto">
-        <div className="glass rounded-xl p-12 border border-gray-800 text-center">
+        <div className="glass rounded-xl p-12 text-center">
           <p className="text-gray-400">{error || "Strategy not found"}</p>
           <Link href="/strategies">
             <button className="mt-4 text-blue-400 hover:text-blue-300">
@@ -218,16 +218,16 @@ export default function StrategyDetailView({
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center space-x-4">
         <Link href="/strategies">
-          <button className="glass p-2 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors">
-            <ArrowLeft className="w-5 h-5 text-gray-400" />
+          <button className="glass p-2 rounded-lg">
+            <ArrowLeft className="w-5 h-5 text-gray-500 hover:text-blue-500" />
           </button>
         </Link>
         <div className="flex-1">
-          <h1 className="text-3xl font-bold text-white">{strategy.name}</h1>
+          <h1 className="text-3xl font-bold text-primary">{strategy.name}</h1>
           <p className="text-gray-400">{strategy.strategyType}</p>
         </div>
 
-        <div className="flex items-center space-x-2 text-yellow-400">
+        <div className="flex items-center space-x-2 text-orange-400">
           <Star className="w-6 h-6 fill-current" />
           <span className="text-xl font-bold">
             {strategy.successRate.toFixed(0)}%
@@ -236,29 +236,29 @@ export default function StrategyDetailView({
       </div>
 
       <div className="grid grid-cols-4 gap-4">
-        <div className="glass rounded-lg p-4 border border-gray-800">
+        <div className="glass rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-400 text-sm">Purchases</span>
+            <span className="text-primary font-bold text-sm">Purchases</span>
             <Users className="w-4 h-4 text-gray-500" />
           </div>
-          <p className="text-2xl font-bold text-white">
+          <p className="text-2xl font-bold text-gray-400">
             {strategy.totalPurchases}
           </p>
         </div>
 
-        <div className="glass rounded-lg p-4 border border-gray-800">
+        <div className="glass rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-400 text-sm">Executions</span>
+            <span className="text-primary font-bold text-sm">Executions</span>
             <Play className="w-4 h-4 text-gray-500" />
           </div>
-          <p className="text-2xl font-bold text-white">
+          <p className="text-2xl font-bold text-gray-400">
             {strategy.totalExecutions}
           </p>
         </div>
 
-        <div className="glass rounded-lg p-4 border border-gray-800">
+        <div className="glass rounded-lg p-4 ">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-400 text-sm">Total Profit</span>
+            <span className="text-primary font-bold text-sm">Total Profit</span>
             <TrendingUp className="w-4 h-4 text-gray-500" />
           </div>
           <p
@@ -270,59 +270,59 @@ export default function StrategyDetailView({
           </p>
         </div>
 
-        <div className="glass rounded-lg p-4 border border-gray-800">
+        <div className="glass rounded-lg p-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-gray-400 text-sm">Created</span>
+            <span className="text-primary font-bold text-sm">Created</span>
             <Clock className="w-4 h-4 text-gray-500" />
           </div>
-          <p className="text-sm font-bold text-white">
+          <p className="text-sm font-bold text-gray-400">
             {new Date(strategy.createdAt * 1000).toLocaleDateString()}
           </p>
         </div>
       </div>
 
-      <div className="glass rounded-xl p-6 border border-gray-800">
-        <h2 className="text-xl font-bold text-white mb-4">Description</h2>
-        <p className="text-gray-300 leading-relaxed">{strategy.description}</p>
+      <div className="glass rounded-xl p-6 ">
+        <h2 className="text-xl font-bold text-primary mb-4">Description</h2>
+        <p className="text-gray-400 leading-relaxed">{strategy.description}</p>
       </div>
 
-      <div className="glass rounded-xl p-6 border border-gray-800">
-        <h2 className="text-xl font-bold text-white mb-4">
+      <div className="glass rounded-xl p-6 ">
+        <h2 className="text-xl font-bold text-primary mb-4">
           Strategy Parameters
         </h2>
         <div className="grid grid-cols-2 gap-4">
           <div>
             <p className="text-sm text-gray-400 mb-1">Min Profit</p>
-            <p className="text-white font-medium">
+            <p className="text-primary font-medium">
               {(strategy.parameters.minProfitBps / 100).toFixed(2)}%
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-400 mb-1">Max Slippage</p>
-            <p className="text-white font-medium">
+            <p className="text-primary font-medium">
               {(strategy.parameters.maxSlippageBps / 100).toFixed(2)}%
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-400 mb-1">Execution Interval</p>
-            <p className="text-white font-medium">
+            <p className="text-primary font-medium">
               {Number(strategy.parameters.executionInterval) / 3600}h
             </p>
           </div>
           <div>
             <p className="text-sm text-gray-400 mb-1">Input Token</p>
-            <p className="text-white font-medium text-xs">
+            <p className="text-primary font-medium text-xs">
               {strategy.parameters.inputToken.toString().slice(0, 8)}...
             </p>
           </div>
         </div>
       </div>
 
-      <div className="glass rounded-xl p-6 border border-gray-800">
+      <div className="glass rounded-xl p-6">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm text-gray-400 mb-1">Price</p>
-            <p className="text-3xl font-bold text-white">
+            <p className="text-3xl font-bold text-primary">
               {strategy.price} USDC
             </p>
           </div>

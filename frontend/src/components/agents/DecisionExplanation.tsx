@@ -21,7 +21,7 @@ export const DecisionExplanation: React.FC<{ decision: Decision }> = ({
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold">
+        <h3 className="text-lg font-semibold text-primary">
           🤖 Agent Decision: {decision.decision.toUpperCase()}
         </h3>
         <span
@@ -45,20 +45,20 @@ export const DecisionExplanation: React.FC<{ decision: Decision }> = ({
         </div>
 
         <div className="border-t pt-4">
-          <h4 className="font-semibold mb-2 flex items-center gap-2">
+          <h4 className="font-semibold mb-2 flex items-center gap-2 text-gray-500">
             <TrendingUp className="w-4 h-4" />
             📊 Market Analysis
           </h4>
           <div className="grid grid-cols-3 gap-3 text-sm">
             <div className="bg-blue-50 p-3 rounded">
               <div className="text-gray-600">Jupiter Price</div>
-              <div className="font-semibold">
+              <div className="font-semibold text-gray-500">
                 1 SOL = ${decision.marketAnalysis.jupiterPrice.toFixed(2)}
               </div>
             </div>
             <div className="bg-blue-50 p-3 rounded">
               <div className="text-gray-600">Orca Price</div>
-              <div className="font-semibold">
+              <div className="font-semibold text-gray-500">
                 1 SOL = ${decision.marketAnalysis.orcaPrice.toFixed(2)}
               </div>
             </div>
@@ -73,7 +73,7 @@ export const DecisionExplanation: React.FC<{ decision: Decision }> = ({
         </div>
 
         <div className="border-t pt-4">
-          <h4 className="font-semibold mb-2">✅ Rules Check</h4>
+          <h4 className="font-semibold mb-2 text-primary">✅ Rules Check</h4>
           <div className="space-y-2 text-sm">
             {Object.entries(decision.rulesCheck).map(([key, passed]) => (
               <div key={key} className="flex items-center gap-2">
@@ -97,14 +97,14 @@ export const DecisionExplanation: React.FC<{ decision: Decision }> = ({
         </div>
 
         <div className="border-t pt-4">
-          <h4 className="font-semibold mb-2 flex items-center gap-2">
+          <h4 className="font-semibold text-primary mb-2 flex items-center gap-2">
             <DollarSign className="w-4 h-4" />
             💰 Expected Outcome
           </h4>
           <div className="grid grid-cols-2 gap-3 text-sm">
             <div className="bg-gray-50 p-3 rounded">
               <div className="text-gray-600">Amount</div>
-              <div className="font-semibold">
+              <div className="font-semibold text-gray-500">
                 ${decision.expectedOutcome.amount}
               </div>
             </div>
@@ -116,7 +116,7 @@ export const DecisionExplanation: React.FC<{ decision: Decision }> = ({
             </div>
             <div className="bg-gray-50 p-3 rounded">
               <div className="text-gray-600">Gas Cost</div>
-              <div className="font-semibold">
+              <div className="font-semibold text-gray-500">
                 ~${decision.expectedOutcome.gasCost.toFixed(2)}
               </div>
             </div>

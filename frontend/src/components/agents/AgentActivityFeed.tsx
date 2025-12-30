@@ -39,7 +39,7 @@ export const AgentActivityFeed: React.FC<{
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
-      <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+      <h3 className="text-lg font-semibold text-primary mb-4 flex items-center gap-2">
         <Activity className="w-5 h-5" />
         Real-Time Activity Feed
       </h3>

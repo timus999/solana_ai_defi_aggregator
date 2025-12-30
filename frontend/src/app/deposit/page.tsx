@@ -54,7 +54,7 @@ export default function DepositPage() {
       {/* Back Button */}
       <Link
         href="/"
-        className="inline-flex items-center text-gray-400 hover:text-white transition"
+        className="inline-flex items-center text-gray-400 hover:text-gray-700 transition"
       >
         <span className="mr-2">←</span>
         Back to Dashboard
@@ -78,25 +78,25 @@ export default function DepositPage() {
       )}
 
       {/* Main Card */}
-      <div className="glass rounded-2xl p-8 border border-gray-800 space-y-6">
+      <div className="glass rounded-2xl p-8  space-y-6">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold text-white">Deposit</h1>
+          <h1 className="text-3xl font-bold text-primary">Deposit</h1>
           <div className="text-4xl">💰</div>
         </div>
 
         {/* Current Stats */}
-        <div className="grid grid-cols-2 gap-4 p-4 bg-black/30 rounded-xl">
+        <div className="grid grid-cols-2 gap-4 p-4 bg-gray-100 rounded-xl">
           <div>
-            <div className="text-gray-400 text-sm">Share Price</div>
-            <div className="text-white font-semibold">
+            <div className="text-gray-500 text-sm">Share Price</div>
+            <div className="text-primary font-semibold">
               {vaultInfo
                 ? `${formatNumber(vaultInfo.sharePrice, 6)} USDC`
                 : "-"}
             </div>
           </div>
           <div>
-            <div className="text-gray-400 text-sm">Your Balance</div>
-            <div className="text-white font-semibold">
+            <div className="text-gray-500 text-sm">Your Balance</div>
+            <div className="text-primary font-semibold">
               {userBalance ? `${formatNumber(userBalance.usdc, 2)} USDC` : "-"}
             </div>
           </div>
@@ -105,10 +105,10 @@ export default function DepositPage() {
         {/* Amount Input */}
         <div className="space-y-2">
           <div className="flex justify-between items-center">
-            <label className="text-gray-400 text-sm">Amount to Deposit</label>
+            <label className="text-gray-500 text-sm">Amount to Deposit</label>
             <button
               onClick={setMaxAmount}
-              className="text-xs text-gray-500 hover:text-gray-300 transition"
+              className="text-xs text-gray-500 font-bold hover:text-gray-700 transition"
             >
               MAX
             </button>
@@ -120,7 +120,7 @@ export default function DepositPage() {
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.00"
-              className="w-full bg-black/50 border border-gray-700 rounded-xl px-6 py-4 text-2xl text-white placeholder-gray-600 focus:outline-none focus:border-gray-500 transition"
+              className="w-full bg-gray-100 rounded-xl px-6 py-4 text-2xl text-primary placeholder-gray-600 focus:outline-none transition"
               step="0.01"
               min={MIN_DEPOSIT}
             />
@@ -130,17 +130,17 @@ export default function DepositPage() {
           </div>
 
           {amount && (
-            <div className="text-sm text-gray-400">
+            <div className="text-sm text-gray-500">
               ≈ {formatCurrency(amountNum)}
             </div>
           )}
         </div>
 
         {/* You Will Receive */}
-        <div className="p-4 bg-black/30 rounded-xl border border-gray-800">
-          <div className="text-gray-400 text-sm mb-2">You will receive</div>
+        <div className="p-4 rounded-xl bg-gray-100">
+          <div className="text-gray-500 text-sm mb-2">You will receive</div>
           <div className="flex items-baseline space-x-2">
-            <div className="text-3xl font-bold text-white">
+            <div className="text-3xl font-bold text-primary">
               {formatNumber(sharesReceived, 2)}
             </div>
             <div className="text-gray-500">shares</div>
@@ -165,7 +165,7 @@ export default function DepositPage() {
           className={`w-full py-4 rounded-xl font-semibold text-lg transition-all transform ${
             isValid && !depositing
               ? "bg-gray-700 hover:bg-gray-600 text-white hover:scale-[1.02] active:scale-[0.98]"
-              : "bg-gray-800 text-gray-500 cursor-not-allowed"
+              : "bg-gray-800 text-gray-400 cursor-not-allowed"
           }`}
         >
           {depositing ? (
@@ -186,7 +186,7 @@ export default function DepositPage() {
       </div>
 
       {/* Info Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
         <InfoCard
           icon="⚡"
           title="Instant"
@@ -213,24 +213,22 @@ function InfoCard({
   description: string;
 }) {
   return (
-    <div className="glass rounded-xl p-4 border border-gray-800 text-center">
+    <div className="glass rounded-xl p-4  text-center">
       <div className="text-2xl mb-2">{icon}</div>
-      <div className="text-white font-semibold text-sm mb-1">{title}</div>
+      <div className="text-primary font-semibold text-sm mb-1">{title}</div>
       <div className="text-gray-500 text-xs">{description}</div>
     </div>
   );
 }
 
 function LoadingSpinner() {
-  return (
-    <div className="w-5 h-5 border-2 border-gray-600 border-t-white rounded-full animate-spin" />
-  );
+  return <div className="w-5 h-5 bg-white rounded-full animate-spin" />;
 }
 
 function LoadingSkeleton() {
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="glass rounded-2xl p-8 border border-gray-800 animate-shimmer h-96" />
+      <div className="bg-gray-100 rounded-2xl p-8  animate-shimmer h-96" />
     </div>
   );
 }
@@ -238,9 +236,9 @@ function LoadingSkeleton() {
 function NotConnected() {
   return (
     <div className="max-w-2xl mx-auto">
-      <div className="glass rounded-2xl p-12 border border-gray-800 text-center">
+      <div className="glass rounded-2xl p-12 text-center">
         <div className="text-6xl mb-4">🔌</div>
-        <div className="text-2xl font-bold text-white mb-2">
+        <div className="text-2xl font-bold text-primary mb-2">
           Wallet Not Connected
         </div>
         <div className="text-gray-400 mb-6">
@@ -248,7 +246,7 @@ function NotConnected() {
         </div>
         <Link
           href="/"
-          className="inline-block px-6 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-xl transition"
+          className="inline-block px-6 py-3 bg-white  text-primary rounded-xl "
         >
           Go to Dashboard
         </Link>

@@ -14,12 +14,14 @@ export const AgentPerformanceDashboard: React.FC<{
 }> = ({ agent, chartData }) => {
   return (
     <div className="bg-white rounded-lg shadow p-6">
-      <h3 className="text-lg font-semibold mb-4">
+      <h3 className="text-lg font-semibold mb-4 text-primary">
         AGENT PERFORMANCE: {agent.name}
       </h3>
 
       <div className="mb-6">
-        <h4 className="font-medium mb-3">📊 Overview (Last 7 Days)</h4>
+        <h4 className="font-medium mb-3 text-gray-500">
+          📊 Overview (Last 7 Days)
+        </h4>
         <ResponsiveContainer width="100%" height={250}>
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -37,7 +39,7 @@ export const AgentPerformanceDashboard: React.FC<{
       </div>
 
       <div className="mb-6">
-        <h4 className="font-medium mb-3">📈 Statistics</h4>
+        <h4 className="font-medium mb-3 text-gray-500">📈 Statistics</h4>
         <div className="grid grid-cols-4 gap-4">
           <div className="bg-green-50 p-4 rounded-lg">
             <div className="text-sm text-gray-600 mb-1">Total Profit</div>
@@ -67,13 +69,17 @@ export const AgentPerformanceDashboard: React.FC<{
       </div>
 
       <div className="mb-6">
-        <h4 className="font-medium mb-3">🎯 Strategy Breakdown</h4>
+        <h4 className="font-medium mb-3 text-gray-500">
+          🎯 Strategy Breakdown
+        </h4>
         <div className="space-y-3">
           {agent.strategies.map((strategy) => (
             <div key={strategy.id} className="flex items-center gap-3">
               <div className="flex-1">
                 <div className="flex justify-between mb-1">
-                  <span className="text-sm font-medium">{strategy.name}</span>
+                  <span className="text-sm font-medium text-gray-400">
+                    {strategy.name}
+                  </span>
                   <span className="text-sm text-green-600 font-medium">
                     +${strategy.profit.toFixed(2)}
                   </span>
@@ -96,7 +102,7 @@ export const AgentPerformanceDashboard: React.FC<{
       </div>
 
       <div>
-        <h4 className="font-medium mb-3">⏱️ Activity Heatmap</h4>
+        <h4 className="font-medium mb-3 text-gray-500">⏱️ Activity Heatmap</h4>
         <div className="bg-gray-50 p-4 rounded-lg">
           <div className="flex gap-2 text-xs mb-2">
             <span className="w-12"></span>

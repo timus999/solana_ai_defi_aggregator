@@ -15,19 +15,19 @@ export const AgentControlPanel: React.FC<{
 
   return (
     <div className="bg-white rounded-lg shadow p-6">
-      <h3 className="text-lg font-semibold mb-4">
+      <h3 className="text-lg font-semibold mb-4 text-primary">
         AGENT SETTINGS: {agent.name}
       </h3>
 
       <div className="space-y-6">
         <div>
-          <h4 className="font-medium mb-3 flex items-center gap-2">
+          <h4 className="font-medium text-gray-600 mb-3 flex items-center gap-2">
             <Settings className="w-4 h-4" />
             ⚙️ Execution Parameters
           </h4>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm text-gray-600 mb-1">
+              <label className="block text-sm text-gray-500 mb-1">
                 Check Interval (seconds)
               </label>
               <input
@@ -39,7 +39,7 @@ export const AgentControlPanel: React.FC<{
                     checkInterval: Number(e.target.value),
                   })
                 }
-                className="w-full px-3 py-2 border rounded-lg"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-400"
               />
             </div>
             <div>
@@ -55,7 +55,7 @@ export const AgentControlPanel: React.FC<{
                     maxPosition: Number(e.target.value),
                   })
                 }
-                className="w-full px-3 py-2 border rounded-lg"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-400"
               />
             </div>
             <div>
@@ -71,7 +71,7 @@ export const AgentControlPanel: React.FC<{
                     dailyLossLimit: Number(e.target.value),
                   })
                 }
-                className="w-full px-3 py-2 border rounded-lg"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-400"
               />
             </div>
             <div>
@@ -87,14 +87,14 @@ export const AgentControlPanel: React.FC<{
                     cooldownPeriod: Number(e.target.value),
                   })
                 }
-                className="w-full px-3 py-2 border rounded-lg"
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-200"
               />
             </div>
           </div>
         </div>
 
         <div className="border-t pt-6">
-          <h4 className="font-medium mb-3">🎚️ Risk Management</h4>
+          <h4 className="font-medium mb-3 text-primary">🎚️ Risk Management</h4>
           <div className="space-y-4">
             <div>
               <label className="block text-sm text-gray-600 mb-2">
@@ -119,7 +119,7 @@ export const AgentControlPanel: React.FC<{
                       }
                       className="w-4 h-4"
                     />
-                    <span className="capitalize">{level}</span>
+                    <span className="capitalize text-gray-500">{level}</span>
                   </label>
                 ))}
               </div>
@@ -138,7 +138,7 @@ export const AgentControlPanel: React.FC<{
                       confidenceMin: Number(e.target.value),
                     })
                   }
-                  className="w-full px-3 py-2 border rounded-lg"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-400"
                 />
               </div>
               <div>
@@ -155,7 +155,7 @@ export const AgentControlPanel: React.FC<{
                       maxSlippage: Number(e.target.value),
                     })
                   }
-                  className="w-full px-3 py-2 border rounded-lg"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-400"
                 />
               </div>
               <div>
@@ -172,7 +172,7 @@ export const AgentControlPanel: React.FC<{
                       minProfit: Number(e.target.value),
                     })
                   }
-                  className="w-full px-3 py-2 border rounded-lg"
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-gray-400"
                 />
               </div>
             </div>
@@ -180,19 +180,21 @@ export const AgentControlPanel: React.FC<{
         </div>
 
         <div className="border-t pt-6">
-          <h4 className="font-medium mb-3">🔔 Notifications</h4>
+          <h4 className="font-medium mb-3 text-primary">🔔 Notifications</h4>
           <div className="space-y-2">
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" defaultChecked className="w-4 h-4" />
-              <span className="text-sm">Email on large profits (&gt;$50)</span>
+              <span className="text-sm text-gray-500">
+                Email on large profits (&gt;$50)
+              </span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" defaultChecked className="w-4 h-4" />
-              <span className="text-sm">SMS on errors</span>
+              <span className="text-sm text-gray-500">SMS on errors</span>
             </label>
             <label className="flex items-center gap-2 cursor-pointer">
               <input type="checkbox" defaultChecked className="w-4 h-4" />
-              <span className="text-sm">
+              <span className="text-sm text-gray-500">
                 Discord webhook for all executions
               </span>
             </label>
@@ -202,13 +204,13 @@ export const AgentControlPanel: React.FC<{
         <div className="flex gap-3 pt-4">
           <button
             onClick={handleSave}
-            className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+            className="flex-1 bg-blue-600 text-gray-200 py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
           >
-            💾 Save Changes
+            Save Changes
           </button>
           <button
             onClick={() => setSettings(agent.settings)}
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            className="px-4 py-2 bg-gray-100 text-gray-500 rounded-lg hover:bg-gray-300 transition-colors"
           >
             🔄 Reset to Default
           </button>

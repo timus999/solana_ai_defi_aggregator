@@ -290,7 +290,7 @@ export default function TransactionHistory() {
           {transactions.map((tx) => (
             <div
               key={tx.signature}
-              className="flex items-center justify-between p-4 rounded-lg  transition-colors"
+              className="flex items-center justify-between p-4 rounded-lg  transition-colors bg-gray-100 card-hover"
             >
               <div className="flex items-center space-x-4">
                 <div className="p-2 bg-white rounded-full border border-gray-800">

@@ -58,8 +58,9 @@ input[type="number"] {
 
 .animate-shimmer {
   animation: shimmer 2s infinite linear;
-  background: linear-gradient(to right, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+  background: linear-gradient(to right, white 0%, gray 50%, white 100%);
   background-size: 1000px 100%;
+  background: white;
 }
 
 /* Card hover effects */

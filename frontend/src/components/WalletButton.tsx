@@ -11,14 +11,14 @@ export default function WalletButton() {
     <div className="flex items-center space-x-4">
       {connected && publicKey && (
         <div className="hidden md:block">
-          <div className="text-sm text-gray-400">Connected as</div>
-          <div className="text-white font-mono text-sm">
+          <div className="text-sm text-gray-400 font-bold">Connected as</div>
+          <div className="text-indigo-500 font-mono text-sm font-bold">
             {shortenAddress(publicKey.toString())}
           </div>
         </div>
       )}
 
-      <WalletMultiButton className="bg-red-600! hover:bg-gray-700! rounded-lg! transition! px-4! py-2!" />
+      <WalletMultiButton className="text-black!  hover:bg-gray-700! rounded-lg! transition! px-4! py-2!" />
     </div>
   );
 }

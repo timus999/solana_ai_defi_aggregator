@@ -184,29 +184,27 @@ export default function JupiterSwap() {
 
   return (
     <div className="max-w-lg mx-auto">
-      <div className="rounded-xl p-6 bg-white">
+      <div className="bg-white rounded-xl p-6 ">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-primary">Swap</h2>
           <button
             onClick={() => setShowSettings(!showSettings)}
-            className="bg-white p-2 rounded-lg  transition-colors"
+            className="p-2 rounded-lg border hover:border-gray-300 transition-colors"
           >
-            <Zap className="w-5 h-5 text-gray-500" />
+            <Zap className="w-5 h-5 text-gray-600" />
           </button>
         </div>
 
         {/* Settings Panel */}
         {showSettings && (
-          <div className="mb-6 bg-white rounded-lg p-4 ">
-            <h3 className="text-sm font-semibold text-primary mb-3">
-              Settings
-            </h3>
+          <div className="mb-6 glass rounded-lg p-4 ">
+            <h3 className="text-sm font-bold text-primary mb-3">Settings</h3>
             <div>
               <label className="block text-sm text-primary mb-2">
                 Slippage Tolerance
               </label>
-              <div className="flex space-x-2">
+              <div className="flex space-x-2 bg-gray-100 p-2 rounded-lg">
                 {[10, 50, 100].map((bps) => (
                   <button
                     key={bps}
@@ -214,7 +212,7 @@ export default function JupiterSwap() {
                     className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
                       slippage === bps
                         ? "bg-blue-600 text-gray-200"
-                        : "glass border border-gray-700 text-gray-400 hover:border-gray-600"
+                        : "bg-white  text-primary hover:border-gray-600"
                     }`}
                   >
                     {bps / 100}%
@@ -226,58 +224,57 @@ export default function JupiterSwap() {
         )}
 
         {/* From Token */}
-        <div className="glass rounded-lg p-4  mb-2">
+        <div className="bg-white rounded-lg p-4  mb-2">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm text-primary">From</span>
-            <span className="text-sm text-primary">Balance: 0.00</span>
+            <span className="text-sm text-gray-400">Balance: 0.00</span>
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 border border-gray-200 p-2 rounded-lg">
             <input
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
               placeholder="0.0"
-              className="flex-1 bg-transparent text-2xl font-bold text-primary outline-none"
+              className="flex-1 bg-transparent text-2xl font-bold text-gray-400 outline-none"
             />
 
-            <button className="flex items-center space-x-2 glass px-4 py-2 rounded-lg  transition-colors">
-              <span className="font-semibold text-primary">
+            <button className="flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors">
+              <span className="font-semibold text-gray-400">
                 {fromToken.symbol}
               </span>
-              <ChevronDown className="w-4 h-4 text-gray-500" />
+              <ChevronDown className="w-4 h-4 text-gray-400" />
             </button>
           </div>
         </div>
 
         {/* Switch Button */}
         <div className="flex justify-center -my-2 relative z-10">
-          <button
-            onClick={switchTokens}
-            className="bg-white p-2 rounded-lg  transition-colors"
-          >
-            <ArrowDownUp className="w-5 h-5 text-primary" />
+          <button onClick={switchTokens} className="p-2 rounded-lg ">
+            <ArrowDownUp className="w-5 h-5 text-gray-400" />
           </button>
         </div>
 
         {/* To Token */}
-        <div className="bg-white rounded-lg p-4  mb-4">
+        <div className="rounded-lg p-4  mb-4">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-gray-400">To</span>
+            <span className="text-sm text-primary">To</span>
             <span className="text-sm text-gray-400">Balance: 0.00</span>
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-3 border border-gray-200 p-2 rounded-lg">
             <input
               type="text"
               value={loadingQuote ? "Loading..." : outputAmount}
               readOnly
               placeholder="0.0"
-              className="flex-1 bg-transparent text-2xl font-bold text-white outline-none"
+              className="flex-1 bg-transparent text-2xl font-bold text-gray-400 outline-none"
             />
 
-            <button className="flex items-center space-x-2 glass px-4 py-2 rounded-lg border border-gray-800 hover:border-gray-700 transition-colors">
-              <span className="font-semibold text-white">{toToken.symbol}</span>
+            <button className="flex items-center space-x-2 glass px-4 py-2 rounded-lg ">
+              <span className="font-semibold text-gray-400">
+                {toToken.symbol}
+              </span>
               <ChevronDown className="w-4 h-4 text-gray-400" />
             </button>
           </div>
@@ -285,16 +282,16 @@ export default function JupiterSwap() {
 
         {/* Price Info */}
         {quote && (
-          <div className="glass rounded-lg p-4 border border-gray-800 mb-4 space-y-2">
+          <div className="rounded-lg p-4 mb-4 space-y-2 bg-gray-100">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-400">Rate</span>
-              <span className="text-white font-semibold">
+              <span className="text-primary">Rate</span>
+              <span className="text-gray-400 font-semibold">
                 1 {fromToken.symbol} = {rate.toFixed(6)} {toToken.symbol}
               </span>
             </div>
 
             <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-400">Price Impact</span>
+              <span className="text-primary">Price Impact</span>
               <span
                 className={`font-semibold ${
                   Math.abs(priceImpact) < 1
@@ -310,8 +307,8 @@ export default function JupiterSwap() {
             </div>
 
             <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-400">Minimum Received</span>
-              <span className="text-white">
+              <span className="text-primary">Minimum Received</span>
+              <span className="text-gray-400">
                 {(
                   parseInt(quote.otherAmountThreshold) /
                   Math.pow(10, toToken.decimals)
@@ -324,11 +321,11 @@ export default function JupiterSwap() {
 
         {/* Route Info */}
         {quote && quote.routePlan && quote.routePlan.length > 0 && (
-          <div className="glass rounded-lg p-4 border border-blue-500/30 bg-blue-500/10 mb-4">
+          <div className="bg-gray-100 rounded-lg p-4  mb-4">
             <div className="flex items-start space-x-2">
               <Info className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
-              <div className="text-sm text-gray-300">
-                <p className="font-semibold text-white mb-1">
+              <div className="text-sm text-gray-400">
+                <p className="font-semibold text-primary mb-1">
                   Best Route Found
                 </p>
                 <p>
@@ -378,7 +375,7 @@ export default function JupiterSwap() {
 
         {/* Powered by Jupiter */}
         <div className="mt-4 text-center">
-          <p className="text-xs text-gray-500">
+          <p className="text-xs text-primary">
             Powered by{" "}
             <span className="text-gray-400 font-semibold">Jupiter</span> • Best
             prices guaranteed

@@ -129,9 +129,9 @@ export default function Portfolio() {
       <div className="bg-foreground rounded-xl p-6 ">
         <h2 className="text-xl font-bold text-primary mb-4">Portfolio</h2>
         <div className="animate-pulse space-y-4">
-          <div className="h-24 bg-gray-700/30 rounded" />
-          <div className="h-32 bg-gray-700/30 rounded" />
-          <div className="h-40 bg-gray-700/30 rounded" />
+          <div className="h-24 bg-gray-100 rounded" />
+          <div className="h-32 bg-gray-100 rounded" />
+          <div className="h-40 bg-gray-100 rounded" />
         </div>
       </div>
     );
