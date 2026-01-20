@@ -1,3 +1,9 @@
+
+# Demo Video
+
+<video src="https://github.com/user-attachments/assets/17b695b8-8106-4129-8acf-9c4d6cbfb053" controls width="500"></video>
+
+
 # Solana AI-Driven Cross-Chain DeFi Aggregator
 
 ## Project Overview
